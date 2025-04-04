@@ -16,6 +16,11 @@ export async function getPosts() {
       slug: filename.replace(".md", ""),
       title: data.title,
       date: data.date,
+      duration: data.duration,
+      views: data.views,
+      comments: data.comments,
+      description: data.description,
+      imageUrl: data.imageUrl,
     };
   });
 }
