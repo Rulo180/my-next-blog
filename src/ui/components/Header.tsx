@@ -1,15 +1,15 @@
-import { Heading } from "@chakra-ui/react";
+import { Flex, Heading, Text } from "@chakra-ui/react";
 
 
 export default function Header() {
     return (
-        <header>
-            <Heading as="h3" size="lg" textAlign="center" my={4}>
+        <Flex as="header" p={6} direction="column" justifyContent="center" gap={3}>
+            <Text as="h3" fontSize="2xl" textAlign="center">
                 A Playground Project for Next.js   
-            </Heading>
-            <Heading as="h1" size="2xl" textAlign="center" my={2}>
+            </Text>
+            <Heading as="h1" size="6xl" textAlign="center">
                 My NextJS Blog
             </Heading>
-        </header>
+        </Flex>
     )
 }

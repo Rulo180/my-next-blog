@@ -9,7 +9,7 @@ export default async function HomePage() {
 
   return (
     <Container>
-      <Grid gap={5}>
+      <Grid templateColumns="repeat(2, 1fr)" gap={5} py={5}>
         {posts.map((post) => (
           <GridItem key={post.slug}>
             <Link href={`/blog/${post.slug}`}>

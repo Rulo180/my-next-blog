@@ -26,31 +26,37 @@ const PostCard: React.FC<PostCardProps> = ({
   viewCount,
   commentCount,
 }) => {
+    const fontSize = "1rem";
+    const lineHeight = "1.5";
+  
+  // Calculate height for two lines in rem
+  const twoLineHeight = `calc(${fontSize} * ${lineHeight} * 2)`;
+
   return (
-    <Card.Root flexDirection="row" overflow="hidden" maxW="xl">
+    <Card.Root flexDirection="row" overflow="hidden" maxW="xl" borderRadius={0} backgroundColor="white" color="black">
       <Image
         objectFit="cover"
         maxW="200px"
         src={imageUrl}
         alt="Caffe Latte"   // TODO: use image alt text
       />
-      <Box>
+      <Box w="full">
         <Card.Header>
-          <Flex gap={2}>
+          <Flex gap={2} fontSize="xs" color="gray.500">
             <Text>{date}</Text>
             -
             <Text>{readingTime} minutes</Text>
           </Flex>
         </Card.Header>
         <Card.Body>
-          <Card.Title mb="2">{title}</Card.Title>
-          <Card.Description lineClamp="3">{description}</Card.Description>
+          <Card.Title mb="2" fontSize="2xl">{title}</Card.Title>
+          <Card.Description height={twoLineHeight} lineClamp="2" color="black">{description}</Card.Description>
         </Card.Body>
-        <Separator my={2} />
+        <Separator my={2} mx={6} />
         <Card.Footer>
             <Flex gap="2">
-                <Text>{viewCount} views</Text>
-                <Text>{commentCount} comments</Text>
+                <Text fontSize="xs" color="gray.500">{viewCount} views</Text>
+                <Text fontSize="xs" color="gray.500">{commentCount} comments</Text>
             </Flex>
         </Card.Footer>
       </Box>

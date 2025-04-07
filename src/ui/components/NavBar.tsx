@@ -1,22 +1,42 @@
 "use client";
 
 import { useState } from "react";
-import { Box, Flex, IconButton, Button } from "@chakra-ui/react";
+import { Box, Button, Flex, IconButton, Text } from "@chakra-ui/react";
 import Link from "next/link";
+
+type NavLinkProps = {
+  href: string;
+  label: string;
+};
+
+function NavLink({ href, label }: NavLinkProps) {
+  return (
+    <Link href={href}>
+      <Box w="165px" h="50px" borderLeft="1px solid">
+        <Text
+          textAlign="center"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          h="100%"
+          _hover={{ color: 'rgb(102, 0, 234)' }}
+        >
+          {label}
+        </Text>
+      </Box>
+    </Link>
+  );
+}
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Box px={4} py={3} border={"1px solid"} borderColor="black">
-      <Flex justify="space-between" align="center" maxW="container.lg" mx="auto">
-        <Flex display={{ base: "none", md: "flex" }} gap={4}>
-          <Link href="/">
-            <Button>Home</Button>
-          </Link>
-          <Link href="/blog">
-            <Button >Saved</Button>
-          </Link>
+    <Box px={4} mx={6} borderY={"1px solid"} borderColor="black">
+      <Flex justify="center" align="center" maxW="container.lg" mx="auto">
+        <Flex display={{ base: "none", md: "flex" }} borderRight="1px solid">
+          <NavLink href="/" label="Home" />
+          <NavLink href="/saved" label="Saved" />
         </Flex>
 
         <Flex align="center" gap={2}>
