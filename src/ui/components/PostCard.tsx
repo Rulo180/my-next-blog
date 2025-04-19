@@ -17,6 +17,22 @@ interface PostCardProps {
   commentCount: number;
 }
 
+/**
+ * A React functional component that displays a blog post card with details such as
+ * date, reading time, title, description, image, view count, and comment count.
+ * 
+ * @component
+ * @param {Object} props - The props for the PostCard component.
+ * @param {string} props.date - The publication date of the post.
+ * @param {string} props.readingTime - The estimated reading time of the post in minutes.
+ * @param {string} props.title - The title of the blog post.
+ * @param {string} props.description - A brief description or excerpt of the blog post.
+ * @param {string} props.imageUrl - The URL of the image associated with the blog post.
+ * @param {number} props.viewCount - The number of views the blog post has received.
+ * @param {number} props.commentCount - The number of comments on the blog post.
+ * 
+ * @returns {JSX.Element} A styled card component displaying the blog post details.
+ */
 const PostCard: React.FC<PostCardProps> = ({
   date,
   readingTime,
