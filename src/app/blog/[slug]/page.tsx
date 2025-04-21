@@ -1,7 +1,7 @@
 import { Box, Container, Flex, Heading, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 
-import { getPost } from '@/lib/posts';
+import { getPost } from '@/app/lib/posts';
 import Markdown from '@/app/ui/components/Markdown';
 import Badge from '@/app/ui/components/Badge';
 import Socials from '@/app/ui/components/Socials';
