@@ -6,8 +6,9 @@ import Markdown from '@/app/ui/components/Markdown';
 import Badge from '@/app/ui/components/Badge';
 import Socials from '@/app/ui/components/Socials';
 
-export default async function BlogPost({ params }: { params: { slug: string } }) {
-  const { content, data: { date, description, duration, imageUrl, tags, title } } = await getPost(params.slug);
+export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const { content, data: { date, description, duration, imageUrl, tags, title } } = await getPost(slug);
 
   return (
     <Container py={8}>
