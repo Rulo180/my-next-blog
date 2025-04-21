@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Container, Grid, GridItem } from "@chakra-ui/react";
 
 import { getPosts } from "@/lib/posts";
-import PostCard from "@/ui/components/PostCard";
+import PostCard from "@/app/ui/components/PostCard";
 
 export default async function HomePage() {
   const posts = await getPosts();

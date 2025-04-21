@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Provider from '@/app/provider';
 
 import "./globals.css";
-import { geistMono, geistSans } from '@/ui/fonts';
-import Header from "@/ui/components/Header";
-import NavBar from "@/ui/components/NavBar";
+import { geistMono, geistSans } from '@/app/ui/fonts';
+import Header from "@/app/ui/components/Header";
+import NavBar from "@/app/ui/components/NavBar";
 
 
 export const metadata: Metadata = {

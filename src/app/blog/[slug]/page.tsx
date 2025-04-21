@@ -2,9 +2,9 @@ import { Box, Container, Flex, Heading, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 
 import { getPost } from '@/lib/posts';
-import Markdown from '@/ui/components/Markdown';
-import Badge from '@/ui/components/Badge';
-import Socials from '@/ui/components/Socials';
+import Markdown from '@/app/ui/components/Markdown';
+import Badge from '@/app/ui/components/Badge';
+import Socials from '@/app/ui/components/Socials';
 
 export default async function BlogPost({ params }: { params: { slug: string } }) {
   const { content, data: { date, description, duration, imageUrl, tags, title } } = await getPost(params.slug);
