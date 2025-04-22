@@ -11,7 +11,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   const { content, data: { date, description, duration, imageUrl, tags, title } } = await getPost(slug);
 
   return (
-    <Container py={8}>
+    <Container as="main" py={8}>
       <Flex
         as="article"
         direction="column"

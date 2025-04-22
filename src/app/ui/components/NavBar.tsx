@@ -32,7 +32,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Box px={4} mx={6} borderY={"1px solid"} borderColor="black">
+    <Box as="nav" px={4} mx={6} borderY={"1px solid"} borderColor="black">
       <Flex justify="center" align="center" maxW="container.lg" mx="auto">
         <Flex display={{ base: "none", md: "flex" }} borderRight="1px solid">
           <NavLink href="/" label="Home" />

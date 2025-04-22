@@ -8,7 +8,7 @@ export default async function HomePage() {
   const posts = await getPosts();
 
   return (
-    <Container>
+    <Container as="main">
       <Grid templateColumns="repeat(2, 1fr)" gap={5} py={5}>
         {posts.map((post) => (
           <GridItem key={post.slug}>
