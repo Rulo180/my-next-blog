@@ -1,7 +1,9 @@
 "use client";
 
 import {
+  Box,
   Button,
+  Checkbox,
   Field,
   Flex,
   Heading,
@@ -14,17 +16,23 @@ import { useActionState } from "react";
 import { FaArrowRight, FaCircleExclamation } from "react-icons/fa6";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { useState } from "react";
 
 import { authenticate } from "@/app/lib/actions";
 
 
 export default function LoginForm() {
+  const [checked, setChecked] = useState(false);
   const searchParams = useSearchParams();
   const callbackUrl = searchParams?.get("callbackUrl") || "/";
   const [errorMessage, formAction, isPending] = useActionState(
     authenticate,
     undefined
   );
+
+  function handlePasswordClick() {
+   setChecked(!checked)
+  }
 
   return (
     <form action={formAction}>
@@ -39,11 +47,13 @@ export default function LoginForm() {
         width="sm"
         backgroundColor="white"
       >
-        <Heading as="h1" size="4xl">
-          Login
-        </Heading>
-        <Text fontSize="xl">to join the conversation</Text>
-        <Flex direction="column" gap={4} mt="8">
+        <Box mb="8">
+          <Heading as="h1" size="4xl">
+            Login
+          </Heading>
+          <Text fontSize="xl">to join the conversation</Text>
+        </Box>
+        <Flex direction="column" gap={4}>
           <Field.Root>
             <Field.Label color="gray.800" fontSize="xs" htmlFor="email">
               Email
@@ -72,12 +82,19 @@ export default function LoginForm() {
               fontSize="sm"
               _placeholder={{ color: "gray.500" }}
               id="password"
-              type="password"
+              type={ checked ? "text" : "password"}
               name="password"
               placeholder="Enter password"
               required
               minLength={6}
             />
+            <Box w="full" textAlign="right" mt="2">
+              <Checkbox.Root checked={checked} onCheckedChange={handlePasswordClick}>
+                <Checkbox.HiddenInput />
+                <Checkbox.Control  border="1px solid" borderColor="gray.500" />
+                <Checkbox.Label>Show password</Checkbox.Label>
+              </Checkbox.Root>
+            </Box>
           </Field.Root>
         </Flex>
         <input type="hidden" name="redirectTo" value={callbackUrl} />
