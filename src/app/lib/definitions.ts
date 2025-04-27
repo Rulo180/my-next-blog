@@ -6,4 +6,12 @@ interface User {
   createdAt: Date; 
 }
 
-export type { User };
+interface Comment {
+  id: string;
+  content: string;
+  createdAt: Date;
+  userId: string;
+  postId: string;
+}
+
+export type { User, Comment };

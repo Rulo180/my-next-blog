@@ -6,7 +6,9 @@ import bcrypt from "bcrypt";
 import { prisma } from "@/lib/prisma";
 import { auth, signIn } from "@/auth";
 import type { User } from "@/app/lib/definitions";
+import { revalidatePath } from "next/cache";
 
+// Users
 export async function authenticate(
   prevState: string | undefined,
   formData: FormData
@@ -26,8 +28,12 @@ export async function authenticate(
 }
 
 export async function getUser(
-  email: string
-): Promise<Pick<User, "id" | "name" | "email"> | undefined> {
+  email: string,
+  includePassword: boolean = false
+): Promise<
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  Pick<User, "id" | "name" | "email"> & (typeof includePassword extends true ? { password: string } : {}) | undefined
+> {
   try {
     const user = await prisma.user.findUnique({
       where: { email },
@@ -35,6 +41,7 @@ export async function getUser(
         id: true,
         name: true,
         email: true,
+        password: includePassword,
       },
     });
     return user || undefined;
@@ -70,6 +77,7 @@ export async function registerUser(
   }
 }
 
+// Comments
 export async function saveComment(
   prevState: string | null | undefined,
   formData: FormData
@@ -95,9 +103,31 @@ export async function saveComment(
       },
     });
 
+    revalidatePath(`/posts/${postId}`);
+
     return null; // No error
   } catch (error) {
     console.error("Error creating comment:", error);
     return "Failed to create comment.";
+  }
+}
+
+export async function deleteComment(
+  prevState: string | null | undefined,
+  formData: FormData
+) {
+  try {
+    const commentId = formData.get("commentId") as string;
+
+    await prisma.comment.delete({
+      where: { id: commentId },
+    });
+
+    revalidatePath(`/posts/${formData.get("postId")}`);
+
+    return null; // No error
+  } catch (error) {
+    console.error("Error deleting comment:", error);
+    return "Failed to delete comment.";
   }
 }

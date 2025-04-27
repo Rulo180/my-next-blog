@@ -8,14 +8,10 @@ import {
 import Image from "next/image";
 
 import { getPost } from "@/app/lib/posts";
-import Markdown from "@/app/ui/components/Markdown";
 import Badge from "@/app/ui/components/Badge";
+import CommentSection from "@/app/ui/components/CommentSection";
+import Markdown from "@/app/ui/components/Markdown";
 import Socials from "@/app/ui/components/Socials";
-import CommentForm from "@/app/ui/components/CommentForm";
-import { getPost } from '@/app/lib/posts';
-import Markdown from '@/app/ui/components/Markdown';
-import Badge from '@/app/ui/components/Badge';
-import Socials from '@/app/ui/components/Socials';
 
 export default async function BlogPost({
   params,
@@ -69,7 +65,7 @@ export default async function BlogPost({
           <Flex gap="5" alignItems="center">
             <Socials />
           </Flex>
-          <CommentForm />
+          <CommentSection slug={ slug }/>
         </Flex>
       </Flex>
     </Container>

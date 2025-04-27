@@ -5,6 +5,7 @@ import * as yup from 'yup';
 
 import { authConfig } from '@/auth.config';
 import { getUser } from '@/app/lib/actions';
+import { User } from '@/app/lib/definitions';
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
   ...authConfig,
@@ -19,10 +20,10 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         try {
           const parsedCredentials = await schema.validate(credentials);
           const { email, password } = parsedCredentials;
-          const user = await getUser(email);
+          const user = await getUser(email, true) as User & { password: string };
           if (!user) return null;
           const passwordsMatch = await bcrypt.compare(password, user.password);
-
+          
           if (passwordsMatch) return user;
         } catch (error) {
           console.error('Validation or user fetch error:', error);

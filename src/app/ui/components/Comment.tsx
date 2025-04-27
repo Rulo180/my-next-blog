@@ -1,0 +1,138 @@
+"use client";
+
+import { Avatar, Box, Flex, Text, IconButton, Menu } from "@chakra-ui/react";
+import { formatDistanceToNow } from "date-fns";
+import { useState, useTransition } from "react";
+import {
+  FaEllipsis,
+  FaRegThumbsDown,
+  FaRegThumbsUp,
+} from "react-icons/fa6";
+
+import type { Comment, User } from "@/app/lib/definitions";
+import { deleteComment } from "@/app/lib/actions";
+
+interface CommentProps {
+  comment: Comment;
+  isOwner: boolean;
+  owner: User;
+}
+
+const Comment: React.FC<CommentProps> = ({ comment, isOwner, owner }) => {
+  const [showMore, setShowMore] = useState(false);
+  const [isPending, startTransition] = useTransition();
+
+  const toggleShowMore = () => setShowMore(!showMore);
+
+  const handleDelete = () => {
+    startTransition(() => {
+      const formData = new FormData();
+      formData.append("commentId", comment.id);
+      formData.append("postId", comment.postId);
+
+      deleteComment(null, formData);
+    });
+  };
+
+  const contentLines = comment.content.split("\n");
+  const isContentLong = contentLines.length > 3;
+
+  return (
+    <Box p={4} mb={4}>
+      <Flex>
+        <Box mr={4}>
+          <Avatar.Root size="sm">
+            <Avatar.Fallback name={owner.name} />
+          </Avatar.Root>
+        </Box>
+        <Flex direction="column" flex="1">
+          <Flex alignItems="center" mb={2}>
+            <Text fontWeight="bold" mr={2}>
+                {owner.name}
+            </Text>
+            <Text color="gray.500" fontSize="sm">
+              {formatDistanceToNow(new Date(comment.createdAt), {
+                addSuffix: true,
+              })}
+            </Text>
+          </Flex>
+          <Box mb={2}>
+            {isContentLong && !showMore ? (
+              <>
+                {contentLines.slice(0, 3).map((line, index) => (
+                  <Text key={index}>{line}</Text>
+                ))}
+                <Text
+                  as="button"
+                  color="blue.500"
+                  fontSize="sm"
+                  onClick={toggleShowMore}
+                  mt={1}
+                >
+                  Show more
+                </Text>
+              </>
+            ) : (
+              <>
+                {contentLines.map((line, index) => (
+                  <Text key={index}>{line}</Text>
+                ))}
+                {isContentLong && (
+                  <Text
+                    as="button"
+                    color="blue.500"
+                    fontSize="sm"
+                    onClick={toggleShowMore}
+                    mt={1}
+                  >
+                    Show less
+                  </Text>
+                )}
+              </>
+            )}
+          </Box>
+          <Flex justifyContent="flex-start" gap={2}>
+            <IconButton
+              variant="ghost"
+              size="sm"
+              colorPalette="blue"
+              aria-label="Like"
+            >
+              <FaRegThumbsUp />
+            </IconButton>
+            <IconButton
+              variant="ghost"
+              size="sm"
+              colorPalette="red"
+              aria-label="Dislike"
+            >
+              <FaRegThumbsDown />
+            </IconButton>
+            {isOwner && (
+              <Menu.Root>
+                <Menu.Trigger asChild>
+                  <IconButton colorPalette="gray" size="sm" aria-label="More">
+                    <FaEllipsis />
+                  </IconButton>
+                </Menu.Trigger>
+                <Menu.Content>
+                  <Menu.Item
+                    value="delete"
+                    onSelect={handleDelete}
+                    color="fg.error"
+                    _hover={{ bg: "bg.error", color: "fg.error" }}
+                    disabled={isPending}
+                  >
+                    Delete
+                  </Menu.Item>
+                </Menu.Content>
+              </Menu.Root>
+            )}
+          </Flex>
+        </Flex>
+      </Flex>
+    </Box>
+  );
+};
+
+export default Comment;
