@@ -14,13 +14,13 @@ export default async function HomePage() {
           <GridItem key={post.slug}>
             <Link href={`/blog/${post.slug}`}>
               <PostCard
+                postId={post.slug}
                 date={post.date}
                 readingTime={post.duration}
                 title={post.title}
                 description={post.description}
                 imageUrl={post.imageUrl}
                 viewCount={post.views}
-                commentCount={post.comments}    
               />
             </Link>
           </GridItem>

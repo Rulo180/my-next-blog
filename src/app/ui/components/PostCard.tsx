@@ -1,3 +1,4 @@
+import { prisma } from "@/lib/prisma";
 import {
   Box,
   Card,
@@ -8,13 +9,13 @@ import {
 } from "@chakra-ui/react";
 
 interface PostCardProps {
+  postId: string;
   date: string;
   readingTime: string;
   title: string;
   description: string;
   imageUrl: string;
   viewCount: number;
-  commentCount: number;
 }
 
 /**
@@ -22,28 +23,35 @@ interface PostCardProps {
  * date, reading time, title, description, image, view count, and comment count.
  * 
  * @component
- * @param {Object} props - The props for the PostCard component.
+ * @param {string} props.postId - The unique identifier for the blog post.
  * @param {string} props.date - The publication date of the post.
  * @param {string} props.readingTime - The estimated reading time of the post in minutes.
  * @param {string} props.title - The title of the blog post.
  * @param {string} props.description - A brief description or excerpt of the blog post.
  * @param {string} props.imageUrl - The URL of the image associated with the blog post.
  * @param {number} props.viewCount - The number of views the blog post has received.
- * @param {number} props.commentCount - The number of comments on the blog post.
  * 
  * @returns {JSX.Element} A styled card component displaying the blog post details.
  */
 const PostCard: React.FC<PostCardProps> = ({
+  postId,
   date,
   readingTime,
   title,
   description,
   imageUrl,
   viewCount,
-  commentCount,
 }) => {
     const fontSize = "1rem";
     const lineHeight = "1.5";
+
+    const commentCount = prisma.comment.count({
+      where: {
+        postId: {
+          equals: postId,
+        }
+      }
+    })
   
   // Calculate height for two lines in rem
   const twoLineHeight = `calc(${fontSize} * ${lineHeight} * 2)`;
