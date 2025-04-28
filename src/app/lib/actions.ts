@@ -96,7 +96,7 @@ export async function saveComment(
     const postId = formData.get("postId") as string;
 
     if (!content || content.trim() === "") {
-      return "Comment content cannot be empty.";
+      return "Comment cannot be empty.";
     }
 
     await prisma.comment.create({

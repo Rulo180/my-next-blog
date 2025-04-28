@@ -73,7 +73,7 @@ const PostCard: React.FC<PostCardProps> = ({
           </Flex>
         </Card.Header>
         <Card.Body>
-          <Card.Title mb="2" fontSize="2xl">{title}</Card.Title>
+          <Card.Title lineClamp="1" mb="2" fontSize="2xl">{title}</Card.Title>
           <Card.Description height={twoLineHeight} lineClamp="2" color="black">{description}</Card.Description>
         </Card.Body>
         <Separator my={2} mx={6} />

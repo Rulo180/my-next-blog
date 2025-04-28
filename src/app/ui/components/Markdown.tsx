@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown';
-import { Heading, Text, List, Blockquote } from '@chakra-ui/react';
+import { Blockquote, Code, Heading, Text, Link as ChakraLink, List } from '@chakra-ui/react';
+import Link from 'next/link';
 
 interface MarkdownProps {
     content: string;
@@ -34,10 +35,10 @@ const Markdown: React.FC<MarkdownProps> = ({ content }) => {
     return (
         <ReactMarkdown
               components={{
-                h1: (props) => <Heading as="h1" size="2xl" {...props} />,
-                h2: (props) => <Heading as="h2" size="xl" {...props} />,
-                h3: (props) => <Heading as="h3" size="lg" {...props} />,
-                p: (props) => <Text fontSize="md" {...props} />,
+                h1: (props) => <Heading as="h1" size="2xl" mb={4} {...props} />,
+                h2: (props) => <Heading as="h2" size="xl" mb={3} {...props} />,
+                h3: (props) => <Heading as="h3" size="lg" mb={2} {...props} />,
+                p: (props) => <Text fontSize="md" mb={2} {...props} />,
                 ul: (props) => <List.Root pl={4} {...props} />,
                 ol: (props) => <List.Root as="ol" pl={4} {...props} />,
                 li: (props) => <List.Item pl={2} {...props} />,
@@ -50,6 +51,16 @@ const Markdown: React.FC<MarkdownProps> = ({ content }) => {
                     fontStyle="italic"
                     {...props}
                   />
+                ),
+                code: ({ children, ...props }) => (
+                    <Code colorPalette="gray" size="md" mb="3" {...props}>
+                      {children}
+                    </Code>
+                ),
+                a: (props) => (
+                  <ChakraLink asChild color="blue.500" textDecoration="underline"  >
+                    <Link href={props.href || '#'} {...props} />
+                  </ChakraLink>
                 ),
               }}
             >
