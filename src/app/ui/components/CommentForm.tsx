@@ -6,8 +6,7 @@ import { Box, Button, Field, Heading, Text, Textarea } from "@chakra-ui/react";
 import { saveComment } from "@/app/lib/actions";
 
 const CommentForm: React.FC<{ postId: string }> = ({ postId }) => {
-
-  const [, formAction, isPending] = useActionState(saveComment, null);
+  const [state, formAction, isPending] = useActionState(saveComment, null);
 
   return (
     <form action={formAction}>
@@ -25,10 +24,15 @@ const CommentForm: React.FC<{ postId: string }> = ({ postId }) => {
           disabled={isPending}
         />
       </Field.Root>
+      <Box minHeight="24px" mt="2">
+        {state && typeof state === "string" && (
+          <Text color="red.500">{state}</Text>
+        )}
+      </Box>
       <input type="hidden" name="postId" value={postId} />
       <Box mt="4">
-        <Button type="submit" colorPalette="gray" variant="outline" color="black" _hover={{ color: "white"}}>
-            Enviar
+        <Button type="submit" colorPalette="gray" variant="surface">
+          Enviar
         </Button>
       </Box>
     </form>
