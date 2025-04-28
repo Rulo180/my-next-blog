@@ -1,11 +1,23 @@
 "use client";
 
 import { useActionState } from "react";
-import { Box, Button, Field, Heading, Text, Textarea } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Link as ChakraLink,
+  Field,
+  Flex,
+  Heading,
+  Text,
+  Textarea,
+} from "@chakra-ui/react";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 import { saveComment } from "@/app/lib/actions";
 
 const CommentForm: React.FC<{ postId: string }> = ({ postId }) => {
+  const { data: session } = useSession();
   const [state, formAction, isPending] = useActionState(saveComment, null);
 
   return (
@@ -21,7 +33,7 @@ const CommentForm: React.FC<{ postId: string }> = ({ postId }) => {
           name="content"
           placeholder="Enter your comment"
           rows={5}
-          disabled={isPending}
+          disabled={isPending || !session}
         />
       </Field.Root>
       <Box minHeight="24px" mt="2">
@@ -30,11 +42,24 @@ const CommentForm: React.FC<{ postId: string }> = ({ postId }) => {
         )}
       </Box>
       <input type="hidden" name="postId" value={postId} />
-      <Box mt="4">
-        <Button type="submit" colorPalette="gray" variant="surface">
-          Enviar
+      <Flex mt="4" justifyContent={session ? 'flex-end' : 'space-between'} alignItems="center">
+        {!session && (
+          <Text>
+            <ChakraLink asChild>
+              <Link href={`/login?callbackUrl=/blog/${postId}`}>Log in</Link>
+            </ChakraLink>{" "}
+            to publish a comment
+          </Text>
+        )}
+        <Button
+          type="submit"
+          colorPalette="gray"
+          variant="surface"
+          disabled={!session}
+        >
+          Submit
         </Button>
-      </Box>
+      </Flex>
     </form>
   );
 };
