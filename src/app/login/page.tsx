@@ -1,8 +1,10 @@
+'use client';
+
 import { Container } from "@chakra-ui/react";
 
 import LoginForm from "@/app/ui/components/LoginForm";
 
-const LoginPage: React.FC = async () => {
+const LoginPage: React.FC = () => {
     return (
         <Container centerContent bgColor="gray.100" py="8">
             <LoginForm />
