@@ -1,14 +1,7 @@
-import {
-  Box,
-  Container,
-  Flex,
-  Heading,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Container, Flex, Heading, Text } from "@chakra-ui/react";
 import Image from "next/image";
 
-import { getPost } from "@/app/lib/posts";
-import Badge from "@/app/ui/components/Badge";
+import { prisma } from "@/lib/prisma";
 import CommentSection from "@/app/ui/components/CommentSection";
 import Markdown from "@/app/ui/components/Markdown";
 import Socials from "@/app/ui/components/Socials";
@@ -19,10 +12,16 @@ export default async function BlogPost({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const {
-    content,
-    data: { date, description, duration, imageUrl, tags, title },
-  } = await getPost(slug);
+  const post = await prisma.post.findUnique({
+    where: { slug },
+  });
+
+  if (!post) {
+    // TODO: Show an alert message
+    throw new Error(`Post with slug "${slug}" not found`);
+  }
+
+  const { content, title, description, date, duration, imageUrl } = post;
 
   return (
     <Container as="main" py={8}>
@@ -41,7 +40,7 @@ export default async function BlogPost({
             fontSize="md"
             color="gray.500"
           >
-            <Text>{date}</Text>-<Text>{duration} minutes</Text>
+            <Text>{date.toLocaleDateString()}</Text>-<Text>{duration} minutes</Text>
           </Flex>
           <Heading size="5xl" pb="8">
             {title}
@@ -57,15 +56,10 @@ export default async function BlogPost({
           </Box>
         </Box>
         <Flex direction="column" gap="6">
-          <Flex gap="3" alignItems="center">
-            {tags.map((tag) => (
-              <Badge key={tag} label={tag} />
-            ))}
-          </Flex>
           <Flex gap="5" alignItems="center">
             <Socials />
           </Flex>
-          <CommentSection slug={ slug }/>
+          <CommentSection slug={slug} />
         </Flex>
       </Flex>
     </Container>

@@ -94,6 +94,13 @@ export async function saveComment(
 
     const content = formData.get("content") as string;
     const postId = formData.get("postId") as string;
+    
+    const post = await prisma.post.findUnique({
+      where: { id: postId },
+    });
+    if (!post) {
+      throw new Error("Post not found");
+    }
 
     if (!content || content.trim() === "") {
       return "Comment cannot be empty.";
@@ -102,12 +109,12 @@ export async function saveComment(
     await prisma.comment.create({
       data: {
         content,
-        postId,
+        postId: post.id,
         userId: user?.id,
       },
     });
 
-    revalidatePath(`/posts/${postId}`);
+    revalidatePath(`/posts/${post.slug}`);
 
     return null; // No error
   } catch (error) {

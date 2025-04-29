@@ -6,10 +6,10 @@ import Comment from "@/app/ui/components/Comment";
 import { EmptyState } from "@/app/ui/components/EmptyState";
 import { FaCommentDots } from "react-icons/fa6";
 
-const CommentList: React.FC<{ slug: string }> = async ({ slug }) => {
+const CommentList: React.FC<{ postId: string }> = async ({ postId }) => {
   const comments = await prisma.comment.findMany({
     where: {
-      postId: slug,
+      postId,
     },
     include: {
       user: true,

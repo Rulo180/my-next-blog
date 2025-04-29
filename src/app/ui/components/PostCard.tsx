@@ -10,8 +10,8 @@ import {
 
 interface PostCardProps {
   postId: string;
-  date: string;
-  readingTime: string;
+  date: Date;
+  readingTime: number;
   title: string;
   description: string;
   imageUrl: string;
@@ -67,7 +67,7 @@ const PostCard: React.FC<PostCardProps> = ({
       <Box w="full">
         <Card.Header>
           <Flex gap={2} fontSize="xs" color="gray.500">
-            <Text>{date}</Text>
+            <Text>{date.toLocaleString()}</Text>
             -
             <Text>{readingTime} minutes</Text>
           </Flex>

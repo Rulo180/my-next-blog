@@ -7,8 +7,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model User {
@@ -20,6 +21,18 @@ model User {
   Comment   Comment[]
 }
 
+model Post {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  content     String
+  description String
+  date        DateTime
+  duration    Int
+  comments    Comment[]
+  imageUrl    String
+}
+
 model Comment {
   id        String   @id @default(cuid())
   content   String
@@ -27,4 +40,5 @@ model Comment {
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   postId    String
+  Post      Post     @relation(fields: [postId], references: [id])
 }
