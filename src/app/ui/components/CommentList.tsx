@@ -1,9 +1,10 @@
-import { Box, EmptyState, Stack, StackSeparator } from "@chakra-ui/react";
-import { FaCommentDots } from "react-icons/fa6";
+import { Box, Stack, StackSeparator } from "@chakra-ui/react";
 
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import Comment from "@/app/ui/components/Comment";
+import { EmptyState } from "@/app/ui/components/EmptyState";
+import { FaCommentDots } from "react-icons/fa6";
 
 const CommentList: React.FC<{ slug: string }> = async ({ slug }) => {
   const comments = await prisma.comment.findMany({
@@ -20,19 +21,11 @@ const CommentList: React.FC<{ slug: string }> = async ({ slug }) => {
   return (
     <Box>
       {comments.length === 0 && (
-        <EmptyState.Root size="sm">
-          <EmptyState.Content>
-            <EmptyState.Indicator>
-              <FaCommentDots />
-            </EmptyState.Indicator>
-            <Stack gap={2} textAlign="center">
-              <EmptyState.Title>Be the first to comment</EmptyState.Title>
-              <EmptyState.Description>
-                Share your thoughts with the community.
-              </EmptyState.Description>
-            </Stack>
-          </EmptyState.Content>
-        </EmptyState.Root>
+        <EmptyState
+          title="Be the first to comment"
+          description="Share your thoughts with the community."
+          icon={<FaCommentDots />}
+        />
       )}
       <Stack gap={4} separator={<StackSeparator />}>
         {comments.map((comment) => (
