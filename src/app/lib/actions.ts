@@ -1,12 +1,13 @@
 "use server";
 
-import { AuthError } from "next-auth";
 import bcrypt from "bcrypt";
-
-import { prisma } from "@/lib/prisma";
-import { auth, signIn } from "@/auth";
-import type { User } from "@/app/lib/definitions";
+import { AuthError } from "next-auth";
 import { revalidatePath } from "next/cache";
+
+import { Prisma } from "@/generated/prisma";
+import { auth, signIn } from "@/auth";
+import { prisma } from "@/lib/prisma";
+import type { User } from "@/app/lib/definitions";
 
 // Users
 export async function authenticate(
@@ -184,7 +185,9 @@ export async function savePost(postId: string) {
   }
 }
 
-export async function getSavedPosts(userId: string): Promise<(typeof prisma.savedPost)[]> {
+export async function getSavedPosts(
+  userId: string
+): Promise<Prisma.SavedPostGetPayload<{ include: { post: true } }>[]> {
   try {
     return await prisma.savedPost.findMany({
       where: { userId },
