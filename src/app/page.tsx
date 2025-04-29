@@ -1,13 +1,20 @@
 import Link from "next/link";
 import { Container, Grid, GridItem } from "@chakra-ui/react";
 
+import { Prisma } from "@/generated/prisma";
 import { prisma } from "@/lib/prisma";
 import PostCard from "@/app/ui/components/PostCard";
 import { EmptyState } from "./ui/components/EmptyState";
 import { FaCircleExclamation } from "react-icons/fa6";
 
 export default async function HomePage() {
-  const posts = await prisma.post.findMany({});
+  const posts: (Prisma.PostGetPayload<{
+    include: { savedBy: true };
+  }>)[] = await prisma.post.findMany({
+    include: {
+      savedBy: true,
+    }
+  });
 
   return (
     <Container as="main">
@@ -29,7 +36,7 @@ export default async function HomePage() {
                   title={post.title}
                   description={post.description}
                   imageUrl={post.imageUrl}
-                  viewCount={0}
+                  isSaved={post.savedBy.length > 0}
                 />
               </Link>
             </GridItem>

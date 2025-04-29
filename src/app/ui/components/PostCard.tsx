@@ -1,12 +1,7 @@
 import { prisma } from "@/lib/prisma";
-import {
-  Box,
-  Card,
-  Flex,
-  Image,
-  Separator,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Card, Flex, Image, Separator, Text } from "@chakra-ui/react";
+
+import SaveButton from "@/app/ui/components/SaveButton";
 
 interface PostCardProps {
   postId: string;
@@ -15,7 +10,8 @@ interface PostCardProps {
   title: string;
   description: string;
   imageUrl: string;
-  viewCount: number;
+  viewCount?: number;
+  isSaved: boolean;
 }
 
 /**
@@ -40,19 +36,20 @@ const PostCard: React.FC<PostCardProps> = ({
   title,
   description,
   imageUrl,
-  viewCount,
+  viewCount = 0,
+  isSaved,
 }) => {
-    const fontSize = "1rem";
-    const lineHeight = "1.5";
+  const fontSize = "1rem";
+  const lineHeight = "1.5";
 
-    const commentCount = prisma.comment.count({
-      where: {
-        postId: {
-          equals: postId,
-        }
+  const commentCount = prisma.comment.count({
+    where: {
+      postId: {
+        equals: postId,
       }
-    })
-  
+    }
+  })
+
   // Calculate height for two lines in rem
   const twoLineHeight = `calc(${fontSize} * ${lineHeight} * 2)`;
 
@@ -62,14 +59,17 @@ const PostCard: React.FC<PostCardProps> = ({
         objectFit="cover"
         maxW="200px"
         src={imageUrl}
-        alt="Caffe Latte"   // TODO: use image alt text
+        alt="Post image"
       />
       <Box w="full">
         <Card.Header>
-          <Flex gap={2} fontSize="xs" color="gray.500">
-            <Text>{date.toLocaleString()}</Text>
-            -
-            <Text>{readingTime} minutes</Text>
+          <Flex justifyContent="space-between" alignItems="center">
+            <Flex gap={2} fontSize="xs" color="gray.500">
+              <Text>{date.toLocaleString()}</Text>
+              -
+              <Text>{readingTime} minutes</Text>
+            </Flex>
+            <SaveButton postId={postId} isSaved={isSaved} />
           </Flex>
         </Card.Header>
         <Card.Body>
@@ -78,10 +78,10 @@ const PostCard: React.FC<PostCardProps> = ({
         </Card.Body>
         <Separator my={2} mx={6} />
         <Card.Footer>
-            <Flex gap="2">
-                <Text fontSize="xs" color="gray.500">{viewCount} views</Text>
-                <Text fontSize="xs" color="gray.500">{commentCount} comments</Text>
-            </Flex>
+          <Flex gap="2">
+            <Text fontSize="xs" color="gray.500">{viewCount} views</Text>
+            <Text fontSize="xs" color="gray.500">{commentCount} comments</Text>
+          </Flex>
         </Card.Footer>
       </Box>
     </Card.Root>

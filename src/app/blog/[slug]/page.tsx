@@ -1,10 +1,12 @@
 import { Box, Container, Flex, Heading, Text } from "@chakra-ui/react";
 import Image from "next/image";
 
+import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import CommentSection from "@/app/ui/components/CommentSection";
 import Markdown from "@/app/ui/components/Markdown";
 import Socials from "@/app/ui/components/Socials";
+import SaveButton from "@/app/ui/components/SaveButton";
 
 export default async function BlogPost({
   params,
@@ -17,11 +19,17 @@ export default async function BlogPost({
   });
 
   if (!post) {
-    // TODO: Show an alert message
     throw new Error(`Post with slug "${slug}" not found`);
   }
 
-  const { content, title, description, date, duration, imageUrl } = post;
+  const { id, content, title, description, date, duration, imageUrl } = post;
+
+  const session = await auth();
+  const userId = session?.user?.id;
+
+  const isSaved = await prisma.savedPost.findFirst({
+    where: { postId: id, userId },
+  });
 
   return (
     <Container as="main" py={8}>
@@ -34,13 +42,16 @@ export default async function BlogPost({
         p={12}
       >
         <Box>
-          <Flex
-            justifyContent="flex-end"
-            gap="2"
-            fontSize="md"
-            color="gray.500"
-          >
-            <Text>{date.toLocaleDateString()}</Text>-<Text>{duration} minutes</Text>
+          <Flex justifyContent="space-between" alignItems="center">
+            <Flex
+              justifyContent="flex-end"
+              gap="2"
+              fontSize="md"
+              color="gray.500"
+            >
+              <Text>{date.toLocaleDateString()}</Text>-<Text>{duration} minutes</Text>
+            </Flex>
+            <SaveButton postId={id} isSaved={!!isSaved} />
           </Flex>
           <Heading size="5xl" pb="8">
             {title}

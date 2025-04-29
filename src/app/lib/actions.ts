@@ -142,3 +142,57 @@ export async function deleteComment(
     return "Failed to delete comment.";
   }
 }
+
+export async function savePost(postId: string) {
+  try {
+    const session = await auth();
+    if (!session?.user) {
+      throw new Error("User is not authenticated.");
+    }
+
+    const userId = session.user.id;
+
+    const existingSavedPost = await prisma.savedPost.findUnique({
+      where: {
+        userId_postId: {
+          userId,
+          postId,
+        },
+      },
+    });
+
+    if (existingSavedPost) {
+      await prisma.savedPost.delete({
+        where: {
+          id: existingSavedPost.id,
+        },
+      });
+      revalidatePath(`/saved`);
+      return { unsaved: true };
+    }
+
+    await prisma.savedPost.create({
+      data: {
+        userId,
+        postId,
+      },
+    });
+    revalidatePath(`/saved`);
+    return { saved: true };
+  } catch (error) {
+    console.error("Error in savePost:", error);
+    throw new Error("Failed to save or unsave the post.");
+  }
+}
+
+export async function getSavedPosts(userId: string) {
+  try {
+    return await prisma.savedPost.findMany({
+      where: { userId },
+      include: { post: true },
+    });
+  } catch (error) {
+    console.error("Error in getSavedPosts:", error);
+    throw new Error("Failed to retrieve saved posts.");
+  }
+}
