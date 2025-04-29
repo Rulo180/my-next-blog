@@ -1,24 +1,16 @@
 import { Suspense } from "react";
 import { Box, Heading, Stack } from "@chakra-ui/react";
 
-import { prisma } from "@/lib/prisma";
+import { Post } from "@/app/lib/definitions";
 import CommentList from "@/app/ui/components/CommentList";
 import CommentForm from "@/app/ui/components/CommentForm";
 import CommentSkeleton from "@/app/ui/components/CommentSkeleton";
 
 interface CommentSectionProps {
-  slug: string;
+  post: Post;
 }
 
-const CommentSection: React.FC<CommentSectionProps> = async ({ slug }) => {
-  const post = await prisma.post.findUnique({
-        where: { slug },
-  });
-  if (!post) {
-    // TODO: Show an alert message
-    throw new Error(`Post with slug "${slug}" not found`);
-  }
-  
+const CommentSection: React.FC<CommentSectionProps> = async ({ post }) => {
   return (
     <Box w="50%">
       <Heading as="h2" mb={4}>

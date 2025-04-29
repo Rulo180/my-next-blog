@@ -14,4 +14,16 @@ interface Comment {
   postId: string;
 }
 
-export type { User, Comment };
+interface Post {
+  id: string;
+  title: string;
+  description: string;
+  content: string;
+  date: Date;
+  duration: number;
+  imageUrl: string;
+  slug: string;
+  comments?: Comment[];
+}
+
+export type { User, Comment, Post };

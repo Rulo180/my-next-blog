@@ -59,7 +59,7 @@ export default async function BlogPost({
           <Flex gap="5" alignItems="center">
             <Socials />
           </Flex>
-          <CommentSection slug={slug} />
+          <CommentSection post={post} />
         </Flex>
       </Flex>
     </Container>
