@@ -61,20 +61,20 @@ export async function registerUser(
     const password = formData.get("password") as string;
 
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    await prisma.user.create({
-      data: {
-        name,
-        email,
-        password: hashedPassword,
-      },
-    });
+    try {
+      await prisma.user.create({
+        data: {
+          name,
+          email,
+          password: hashedPassword,
+        },
+      });
+    } catch (prismaError) {
+      console.error("Error creating user in Prisma:", prismaError);
+      return "Failed to create user.";
+    }
 
     return null; // No error
-  } catch (error) {
-    console.error("Error registering user:", error);
-    return "Failed to register user.";
-  }
 }
 
 // Comments
@@ -150,7 +150,7 @@ export async function savePost(postId: string) {
       throw new Error("User is not authenticated.");
     }
 
-    const userId = session.user.id;
+    const userId = session.user.id as string;
 
     const existingSavedPost = await prisma.savedPost.findUnique({
       where: {
@@ -185,7 +185,7 @@ export async function savePost(postId: string) {
   }
 }
 
-export async function getSavedPosts(userId: string) {
+export async function getSavedPosts(userId: string): Promise<(typeof prisma.savedPost)[]> {
   try {
     return await prisma.savedPost.findMany({
       where: { userId },
