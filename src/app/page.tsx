@@ -30,7 +30,7 @@ export default async function HomePage() {
             <GridItem key={post.slug}>
               <Link href={`/blog/${post.slug}`}>
                 <PostCard
-                  postId={post.slug}
+                  postId={post.id}
                   date={post.date}
                   readingTime={post.duration}
                   title={post.title}
