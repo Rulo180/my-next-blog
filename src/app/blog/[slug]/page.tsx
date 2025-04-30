@@ -51,7 +51,7 @@ export default async function BlogPost({
             >
               <Text>{date.toLocaleDateString()}</Text>-<Text>{duration} minutes</Text>
             </Flex>
-            <SaveButton postId={id} isSaved={!!isSaved} />
+            {session && (<SaveButton postId={id} isSaved={!!isSaved} />)}
           </Flex>
           <Heading size="5xl" pb="8">
             {title}

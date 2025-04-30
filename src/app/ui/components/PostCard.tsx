@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { Box, Card, Flex, Image, Separator, Text } from "@chakra-ui/react";
 
 import SaveButton from "@/app/ui/components/SaveButton";
+import { auth } from "@/auth";
 
 interface PostCardProps {
   postId: string;
@@ -29,7 +30,7 @@ interface PostCardProps {
  * 
  * @returns {JSX.Element} A styled card component displaying the blog post details.
  */
-const PostCard: React.FC<PostCardProps> = ({
+const PostCard: React.FC<PostCardProps> = async ({
   postId,
   date,
   readingTime,
@@ -39,6 +40,7 @@ const PostCard: React.FC<PostCardProps> = ({
   viewCount = 0,
   isSaved,
 }) => {
+  const session = await auth();
   const fontSize = "1rem";
   const lineHeight = "1.5";
 
@@ -69,7 +71,7 @@ const PostCard: React.FC<PostCardProps> = ({
               -
               <Text>{readingTime} minutes</Text>
             </Flex>
-            <SaveButton postId={postId} isSaved={isSaved} />
+            {session && (<SaveButton postId={postId} isSaved={isSaved} />)}
           </Flex>
         </Card.Header>
         <Card.Body>
