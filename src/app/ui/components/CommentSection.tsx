@@ -27,7 +27,7 @@ const CommentSection: React.FC<CommentSectionProps> = async ({ post }) => {
         >
           <CommentList postId={post.id} />
         </Suspense>
-        <CommentForm postId={post.id} />
+        <CommentForm post={post} />
       </Stack>
     </Box>
   );

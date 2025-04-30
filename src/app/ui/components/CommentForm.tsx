@@ -15,8 +15,13 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 
 import { saveComment } from "@/app/lib/actions";
+import type { Prisma } from "@/generated/prisma";
 
-const CommentForm: React.FC<{ postId: string }> = ({ postId }) => {
+interface CommentFormProps {
+  post: Prisma.PostGetPayload<object>;
+}
+
+const CommentForm: React.FC<CommentFormProps> = ({ post }) => {
   const { data: session } = useSession();
   const [errors, formAction, isPending] = useActionState(saveComment, null);
 
@@ -41,12 +46,16 @@ const CommentForm: React.FC<{ postId: string }> = ({ postId }) => {
           <Text color="red.500">{errors}</Text>
         )}
       </Box>
-      <input type="hidden" name="postId" value={postId} />
+      <input type="hidden" name="postId" value={post.id} />
       <Flex mt="4" justifyContent={session ? 'flex-end' : 'space-between'} alignItems="center">
         {!session && (
           <Text>
             <ChakraLink asChild>
-              <Link href={`/login?callbackUrl=/blog/${postId}`}>Log in</Link>
+              <Link href={`/login?callbackUrl=/blog/${post.slug}`}>Log in</Link>
+            </ChakraLink>
+            {" "}or{" "}
+            <ChakraLink asChild>
+              <Link href={`/signup?callbackUrl=/blog/${post.slug}`}>sign up</Link>
             </ChakraLink>{" "}
             to publish a comment
           </Text>
