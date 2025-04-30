@@ -18,7 +18,7 @@ import { saveComment } from "@/app/lib/actions";
 
 const CommentForm: React.FC<{ postId: string }> = ({ postId }) => {
   const { data: session } = useSession();
-  const [state, formAction, isPending] = useActionState(saveComment, null);
+  const [errors, formAction, isPending] = useActionState(saveComment, null);
 
   return (
     <form action={formAction}>
@@ -37,8 +37,8 @@ const CommentForm: React.FC<{ postId: string }> = ({ postId }) => {
         />
       </Field.Root>
       <Box minHeight="24px" mt="2">
-        {state && typeof state === "string" && (
-          <Text color="red.500">{state}</Text>
+        {errors && typeof errors === "string" && (
+          <Text color="red.500">{errors}</Text>
         )}
       </Box>
       <input type="hidden" name="postId" value={postId} />

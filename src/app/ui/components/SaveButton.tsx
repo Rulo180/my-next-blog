@@ -17,7 +17,7 @@ const SaveButton: React.FC<SaveButtonProps> = ({
   const [isSaved, setIsSaved] = useState(initialSaved);
 
   const handleSavePost = async (e: React.MouseEvent) => {
-    e.stopPropagation();
+    e.preventDefault();
     try {
       await savePost(postId);
       setIsSaved(!isSaved);

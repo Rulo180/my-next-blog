@@ -18,6 +18,7 @@ export async function authenticate(
     await signIn("credentials", formData);
   } catch (error) {
     if (error instanceof AuthError) {
+      console.error("Failed to authenticate user:", error);
       if (error.message === "CredentialsSignin") {
         return "Invalid credentials.";
       } else {
@@ -84,13 +85,11 @@ export async function saveComment(
 ) {
   try {
     const session = await auth();
-    const email = session?.user?.email;
-
-    const user = await getUser(email as string);
-
-    if (!user) {
+    if (!session?.user) {
       throw new Error("User is not authenticated.");
     }
+
+    const user = session.user as User;
 
     const content = formData.get("content") as string;
     const postId = formData.get("postId") as string;

@@ -1,8 +1,8 @@
 import { Flex, Heading, Text, Box } from "@chakra-ui/react";
+import Link from "next/link";
 
 import { auth } from "@/auth";
 import UserAvatar from "@/app/ui/components/UserAvatar";
-import Link from "next/link";
 
 export default async function Header() {
   const session = await auth();
