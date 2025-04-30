@@ -54,7 +54,6 @@ export async function getUser(
 }
 
 export async function registerUser(
-  prevState: string | null | undefined,
   formData: FormData
 ): Promise<string | null> {
     const name = formData.get("name") as string;

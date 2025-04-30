@@ -10,24 +10,49 @@ import {
   Link as ChakraLink,
   Text,
 } from "@chakra-ui/react";
-import { useActionState } from "react";
+import { useState } from "react";
 import { FaCircleExclamation } from "react-icons/fa6";
 import Link from "next/link";
+import { signIn } from "next-auth/react"
 import { useSearchParams } from "next/navigation";
 
 import { registerUser } from "@/app/lib/actions";
 
-
 export default function SignUpForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams?.get("callbackUrl") || "/";
-  const [errorMessage, formAction, isPending] = useActionState(
-    registerUser,
-    null
-  );
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    let error = null;
+    try {
+      error = await registerUser(formData);
+    } catch (error) {
+      console.error("Error during registration:", error);
+      setError("Failed to register. Please try again.");
+    }
+
+    if (!error) {
+      const email = formData.get("email") as string;
+      const password = formData.get("password") as string;
+
+      try {
+        await signIn("credentials", {
+          email,
+          password,
+          callbackUrl,
+        })
+      } catch (error) {
+        console.error("Error during sign-in:", error);
+        setError("Failed to sign in. Please try again.");
+      }
+    }
+  };
 
   return (
-    <form action={formAction}>
+    <form onSubmit={handleSubmit}>
       <Flex
         direction="column"
         pb={4}
@@ -76,18 +101,16 @@ export default function SignUpForm() {
             />
           </Field.Root>
         </Flex>
-        <input type="hidden" name="redirectTo" value={callbackUrl} />
         <Button
           type="submit"
           mt="4"
           w="full"
           colorPalette="blue"
           fontSize="lg"
-          aria-disabled={isPending}
         >
           Sign Up
         </Button>
-        {errorMessage && (
+        {error && (
           <Flex
             h="8"
             alignItems="flex-end"
@@ -99,7 +122,7 @@ export default function SignUpForm() {
               <FaCircleExclamation />
             </Icon>
             <Text fontSize="sm" color="red.500">
-              {errorMessage}
+              {error}
             </Text>
           </Flex>
         )}
