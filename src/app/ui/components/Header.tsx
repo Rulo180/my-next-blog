@@ -1,4 +1,4 @@
-import { Flex, Heading, Text, Box } from "@chakra-ui/react";
+import { Flex, Heading, Link as ChakraLink, Text, Box } from "@chakra-ui/react";
 import Link from "next/link";
 
 import { auth } from "@/auth";
@@ -14,10 +14,12 @@ export default async function Header() {
             A Playground Project for Next.js
           </Text>
         </Box>
-        {session?.user && (
-          <UserAvatar name={session.user.name || "User"} />
+        {session?.user && <UserAvatar name={session.user.name || "User"} />}
+        {!session?.user && (
+          <ChakraLink asChild color="primary">
+            <Link href="/login">Login</Link>
+          </ChakraLink>
         )}
-        {!session?.user && <Link href="/login">Login</Link>}
       </Flex>
       <Heading as="h1" size="6xl" textAlign="center">
         My NextJS Blog

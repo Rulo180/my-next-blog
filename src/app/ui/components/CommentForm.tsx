@@ -50,11 +50,11 @@ const CommentForm: React.FC<CommentFormProps> = ({ post }) => {
       <Flex mt="4" justifyContent={session ? 'flex-end' : 'space-between'} alignItems="center">
         {!session && (
           <Text>
-            <ChakraLink asChild>
+            <ChakraLink asChild color="primary">
               <Link href={`/login?callbackUrl=/blog/${post.slug}`}>Log in</Link>
             </ChakraLink>
             {" "}or{" "}
-            <ChakraLink asChild>
+            <ChakraLink asChild color="primary">
               <Link href={`/signup?callbackUrl=/blog/${post.slug}`}>sign up</Link>
             </ChakraLink>{" "}
             to publish a comment
@@ -62,8 +62,8 @@ const CommentForm: React.FC<CommentFormProps> = ({ post }) => {
         )}
         <Button
           type="submit"
-          colorPalette="gray"
-          variant="surface"
+          colorPalette="purple"
+          variant="solid"
           disabled={!session}
         >
           Submit

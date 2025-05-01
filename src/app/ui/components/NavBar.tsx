@@ -19,7 +19,7 @@ function NavLink({ href, label }: NavLinkProps) {
           alignItems="center"
           justifyContent="center"
           h="100%"
-          _hover={{ color: 'rgb(102, 0, 234)' }}
+          _hover={{ color: 'primary' }}
         >
           {label}
         </Text>
@@ -51,12 +51,8 @@ export default function Navbar() {
 
       {isOpen && (
         <Box display={{ base: "block", md: "none" }} mt={2} p={2} shadow="md">
-          <Link href="/blog">
-            <Button variant="ghost" w="full">Blog</Button>
-          </Link>
-          <Link href="/about">
-            <Button variant="ghost" w="full">About</Button>
-          </Link>
+           <NavLink href="/" label="Home" />
+           <NavLink href="/saved" label="Saved" />
         </Box>
       )}
     </Box>
