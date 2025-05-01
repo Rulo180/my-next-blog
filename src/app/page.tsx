@@ -1,20 +1,28 @@
 import Link from "next/link";
 import { Container, Grid, GridItem } from "@chakra-ui/react";
-
-import { Prisma } from "@/generated/prisma";
-import { prisma } from "@/lib/prisma";
-import PostCard from "@/app/ui/components/PostCard";
-import { EmptyState } from "./ui/components/EmptyState";
 import { FaCircleExclamation } from "react-icons/fa6";
 
+import { Prisma } from "@/generated/prisma";
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+import PostCard from "@/app/ui/components/PostCard";
+import { EmptyState } from "@/app/ui/components/EmptyState";
+
 export default async function HomePage() {
-  const posts: (Prisma.PostGetPayload<{
+  const session = await auth();
+  const posts: Prisma.PostGetPayload<{
     include: { savedBy: true };
-  }>)[] = await prisma.post.findMany({
+  }>[] = await prisma.post.findMany({
     include: {
       savedBy: true,
-    }
+    },
   });
+
+  const isSaved = !session
+    ? false
+    : posts.some((post) =>
+        post.savedBy.some((user) => user.id === session.user?.id)
+      );
 
   return (
     <Container as="main">
@@ -36,7 +44,7 @@ export default async function HomePage() {
                   title={post.title}
                   description={post.description}
                   imageUrl={post.imageUrl}
-                  isSaved={post.savedBy.length > 0}
+                  isSaved={isSaved}
                 />
               </Link>
             </GridItem>
