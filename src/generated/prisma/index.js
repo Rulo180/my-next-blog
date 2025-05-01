@@ -184,7 +184,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "POSTGRES_PRISMA_URL",
-        "value": "postgres://postgres.jfuetgmfpwvrvfnzswot:q2Ay1gebpZiWFvh7@aws-0-sa-east-1.pooler.supabase.com:6543/postgres?sslmode=require&supa=base-pooler.x"
+        "value": "postgres://neondb_owner:npg_fmCKLQ94NMpz@ep-fancy-thunder-a4jtk5l7-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
       }
     }
   },
