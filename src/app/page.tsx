@@ -18,12 +18,6 @@ export default async function HomePage() {
     },
   });
 
-  const isSaved = !session
-    ? false
-    : posts.some((post) =>
-        post.savedBy.some((user) => user.id === session.user?.id)
-      );
-
   return (
     <Container as="main">
       {posts.length === 0 ? (
@@ -34,21 +28,26 @@ export default async function HomePage() {
         />
       ) : (
         <Grid templateColumns="repeat(2, 1fr)" gap={5} py={5}>
-          {posts.map((post) => (
-            <GridItem key={post.slug}>
-              <Link href={`/blog/${post.slug}`}>
-                <PostCard
-                  postId={post.id}
-                  date={post.date}
-                  readingTime={post.duration}
-                  title={post.title}
-                  description={post.description}
-                  imageUrl={post.imageUrl}
-                  isSaved={isSaved}
-                />
-              </Link>
-            </GridItem>
-          ))}
+          {posts.map((post) => {
+            const isSaved = !session
+              ? false
+              : post.savedBy.some((savedPost) => savedPost.userId === session.user!.id);
+            return (
+              <GridItem key={post.slug}>
+                <Link href={`/blog/${post.slug}`}>
+                  <PostCard
+                    postId={post.id}
+                    date={post.date}
+                    readingTime={post.duration}
+                    title={post.title}
+                    description={post.description}
+                    imageUrl={post.imageUrl}
+                    isSaved={isSaved}
+                  />
+                </Link>
+              </GridItem>
+            );
+          })}
         </Grid>
       )}
     </Container>
