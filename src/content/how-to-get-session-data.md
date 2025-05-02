@@ -2,7 +2,7 @@
 title: "How to get the session data from a Client component"
 description: "In this short post we are going to show how you can access your session data from the server and the client."
 duration: 3
-imageUrl: "/images/data-image--desktop.jpg"
+imageUrl: "/images/posts/data-image--desktop.jpg"
 date: "2025-04-30"
 ---
 # How to get the session data from a Client component

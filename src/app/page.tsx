@@ -1,15 +1,13 @@
-import Link from "next/link";
 import { Container, Grid, GridItem } from "@chakra-ui/react";
 import { FaCircleExclamation } from "react-icons/fa6";
 
 import { Prisma } from "@/generated/prisma";
-import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
-import PostCard from "@/app/ui/components/PostCard";
 import { EmptyState } from "@/app/ui/components/EmptyState";
+import Posts from "@/app/ui/components/layout/Posts";
+import About from "@/app/ui/components/layout/About";
 
 export default async function HomePage() {
-  const session = await auth();
   const posts: Prisma.PostGetPayload<{
     include: { savedBy: true };
   }>[] = await prisma.post.findMany({
@@ -27,27 +25,13 @@ export default async function HomePage() {
           icon={<FaCircleExclamation />}
         />
       ) : (
-        <Grid templateColumns="repeat(2, 1fr)" gap={5} py={5}>
-          {posts.map((post) => {
-            const isSaved = !session
-              ? false
-              : post.savedBy.some((savedPost) => savedPost.userId === session.user!.id);
-            return (
-              <GridItem key={post.slug}>
-                <Link href={`/blog/${post.slug}`}>
-                  <PostCard
-                    postId={post.id}
-                    date={post.date}
-                    readingTime={post.duration}
-                    title={post.title}
-                    description={post.description}
-                    imageUrl={post.imageUrl}
-                    isSaved={isSaved}
-                  />
-                </Link>
-              </GridItem>
-            );
-          })}
+        <Grid templateColumns="repeat(3, 1fr)" gap={5} py={5}>
+          <GridItem colSpan={2}>
+            <Posts posts={posts} />
+          </GridItem>
+          <GridItem>
+            <About />
+          </GridItem>
         </Grid>
       )}
     </Container>

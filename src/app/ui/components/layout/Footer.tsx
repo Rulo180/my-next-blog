@@ -4,7 +4,7 @@ import Socials from "@/app/ui/components/Socials";
 
 export default function Footer() {
   return (
-    <Container as="footer" fontSize="sm" backgroundColor="gray.200">
+    <Container fluid as="footer" fontSize="sm" backgroundColor="gray.200">
       <Flex justifyContent="space-between" alignItems="center" py={4}>
         <Flex justifyContent="center" gap={4}>
           <Socials />

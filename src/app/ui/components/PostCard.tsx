@@ -18,7 +18,7 @@ interface PostCardProps {
 /**
  * A React functional component that displays a blog post card with details such as
  * date, reading time, title, description, image, view count, and comment count.
- * 
+ *
  * @component
  * @param {string} props.postId - The unique identifier for the blog post.
  * @param {string} props.date - The publication date of the post.
@@ -27,7 +27,7 @@ interface PostCardProps {
  * @param {string} props.description - A brief description or excerpt of the blog post.
  * @param {string} props.imageUrl - The URL of the image associated with the blog post.
  * @param {number} props.viewCount - The number of views the blog post has received.
- * 
+ *
  * @returns {JSX.Element} A styled card component displaying the blog post details.
  */
 const PostCard: React.FC<PostCardProps> = async ({
@@ -48,41 +48,50 @@ const PostCard: React.FC<PostCardProps> = async ({
     where: {
       postId: {
         equals: postId,
-      }
-    }
-  })
+      },
+    },
+  });
 
   // Calculate height for two lines in rem
   const twoLineHeight = `calc(${fontSize} * ${lineHeight} * 2)`;
 
   return (
-    <Card.Root flexDirection="row" overflow="hidden" maxW="xl" borderRadius={0} backgroundColor="white" color="black">
-      <Image
-        objectFit="cover"
-        maxW="200px"
-        src={imageUrl}
-        alt="Post image"
-      />
+    <Card.Root
+      flexDirection="row"
+      overflow="hidden"
+      maxW="xl"
+      borderRadius={0}
+      backgroundColor="white"
+      color="black"
+    >
+      <Image objectFit="cover" maxW="200px" src={imageUrl} alt="Post image" />
       <Box w="full">
         <Card.Header>
           <Flex justifyContent="space-between" alignItems="center">
             <Flex gap={2} fontSize="xs" color="gray.500">
-              <Text>{date.toLocaleString()}</Text>
-              -
+              <Text>{new Date(date).toLocaleDateString("es-AR")}</Text>-
               <Text>{readingTime} minutes</Text>
             </Flex>
-            {session && (<SaveButton postId={postId} isSaved={isSaved} />)}
+            {session && <SaveButton postId={postId} isSaved={isSaved} />}
           </Flex>
         </Card.Header>
         <Card.Body>
-          <Card.Title lineClamp="1" mb="2" fontSize="2xl">{title}</Card.Title>
-          <Card.Description height={twoLineHeight} lineClamp="2" color="black">{description}</Card.Description>
+          <Card.Title lineClamp="1" mb="2" fontSize="2xl">
+            {title}
+          </Card.Title>
+          <Card.Description height={twoLineHeight} lineClamp="2" color="black">
+            {description}
+          </Card.Description>
         </Card.Body>
         <Separator my={2} mx={6} />
         <Card.Footer>
           <Flex gap="2">
-            <Text fontSize="xs" color="gray.500">{viewCount} views</Text>
-            <Text fontSize="xs" color="gray.500">{commentCount} comments</Text>
+            <Text fontSize="xs" color="gray.500">
+              {viewCount} views
+            </Text>
+            <Text fontSize="xs" color="gray.500">
+              {commentCount} comments
+            </Text>
           </Flex>
         </Card.Footer>
       </Box>
