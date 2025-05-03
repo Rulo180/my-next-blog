@@ -1,9 +1,21 @@
 "use client";
 
-import { Avatar, Box, Flex, Text, IconButton, Menu } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Flex,
+  Text,
+  Icon,
+  IconButton,
+  Menu,
+} from "@chakra-ui/react";
 import { formatDistanceToNow } from "date-fns";
 import { useState, useTransition, useOptimistic, useMemo } from "react";
-import { FaEllipsis, FaRegThumbsDown, FaRegThumbsUp } from "react-icons/fa6";
+import {
+  FaEllipsis,
+  FaThumbsDown,
+  FaThumbsUp,
+} from "react-icons/fa6";
 import { toggleReaction } from "@/app/lib/actions";
 import { useSession } from "next-auth/react";
 
@@ -49,7 +61,7 @@ const Comment: React.FC<CommentProps> = ({ comment, isOwner, owner }) => {
   };
 
   const handleReaction = (type: "LIKE" | "DISLIKE") => {
-    if (!session?.user || session.user.id === owner.id) return;
+    if (!session?.user) return;
 
     const newReaction = optimisticReaction === type ? null : type;
     setOptimisticReaction(newReaction);
@@ -125,20 +137,23 @@ const Comment: React.FC<CommentProps> = ({ comment, isOwner, owner }) => {
               size="sm"
               colorPalette={optimisticReaction === "LIKE" ? "purple" : "gray"}
               aria-label="Like"
-              disabled={isOwner}
               onClick={() => handleReaction("LIKE")}
             >
-              <FaRegThumbsUp />
+              <Icon color={optimisticReaction === "LIKE" ? "#6601ea" : "gray"}>
+                <FaThumbsUp />
+              </Icon>
             </IconButton>
             <IconButton
               variant="ghost"
               size="sm"
               colorPalette={optimisticReaction === "DISLIKE" ? "red" : "gray"}
               aria-label="Dislike"
-              disabled={isOwner}
               onClick={() => handleReaction("DISLIKE")}
             >
-              <FaRegThumbsDown />
+              <Icon color={optimisticReaction === "DISLIKE" ? "red" : "gray"}>
+
+              <FaThumbsDown />
+              </Icon>
             </IconButton>
             {isOwner && (
               <Menu.Root>
