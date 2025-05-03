@@ -27,7 +27,7 @@ export default function RootLayout({
           <Grid
             templateRows="auto auto 1fr auto"
             templateColumns="1fr"
-            height="100vh"
+            minHeight="100vh"
           >
             <GridItem>
               <Header />

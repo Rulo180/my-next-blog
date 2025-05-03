@@ -31,7 +31,7 @@ export default function About() {
             src="/images/profile-picture.jpg"
             alt="Profile picture"
             width={1200}
-            height={1100}
+            height={950}
           />
         </ChakraImage>
         <Stack gap="4">
