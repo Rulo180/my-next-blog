@@ -196,3 +196,34 @@ export async function getSavedPosts(
     throw new Error("Failed to retrieve saved posts.");
   }
 }
+
+export async function toggleReaction(userId: string, commentId: string, type: "LIKE" | "DISLIKE" | null) {
+  if (!type) {
+    await prisma.reaction.deleteMany({
+      where: {
+        userId,
+        commentId,
+      },
+    });
+    revalidatePath(`/blog/${commentId}`);
+    return;
+  }
+
+  await prisma.reaction.upsert({
+    where: {
+      userId_commentId: {
+        userId,
+        commentId,
+      },
+    },
+    update: {
+      type,
+    },
+    create: {
+      userId,
+      commentId,
+      type,
+    },
+  });
+  revalidatePath(`/blog/${commentId}`);
+}

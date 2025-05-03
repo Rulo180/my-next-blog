@@ -13,6 +13,7 @@ const CommentList: React.FC<{ postId: string }> = async ({ postId }) => {
     },
     include: {
       user: true,
+      reactions: true
     },
   });
 

@@ -2,25 +2,39 @@
 
 import { Avatar, Box, Flex, Text, IconButton, Menu } from "@chakra-ui/react";
 import { formatDistanceToNow } from "date-fns";
-import { useState, useTransition } from "react";
-import {
-  FaEllipsis,
-  FaRegThumbsDown,
-  FaRegThumbsUp,
-} from "react-icons/fa6";
+import { useState, useTransition, useOptimistic, useMemo } from "react";
+import { FaEllipsis, FaRegThumbsDown, FaRegThumbsUp } from "react-icons/fa6";
+import { toggleReaction } from "@/app/lib/actions";
+import { useSession } from "next-auth/react";
 
 import type { Comment, User } from "@/app/lib/definitions";
 import { deleteComment } from "@/app/lib/actions";
+import { Prisma } from "@/generated/prisma";
 
 interface CommentProps {
-  comment: Comment;
+  comment: Prisma.CommentGetPayload<{
+    include: {
+      reactions: true;
+      user: true;
+    };
+  }>;
   isOwner: boolean;
   owner: User;
 }
 
 const Comment: React.FC<CommentProps> = ({ comment, isOwner, owner }) => {
+  const { data: session } = useSession();
   const [showMore, setShowMore] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const userReaction = useMemo(() => {
+    return session?.user
+      ? comment.reactions.find(
+          (reaction) => reaction.userId === session.user!.id
+        )?.type || null
+      : null;
+  }, [comment.reactions, session?.user]);
+  const [optimisticReaction, setOptimisticReaction] =
+    useOptimistic(userReaction);
 
   const toggleShowMore = () => setShowMore(!showMore);
 
@@ -32,6 +46,20 @@ const Comment: React.FC<CommentProps> = ({ comment, isOwner, owner }) => {
 
       deleteComment(null, formData);
     });
+  };
+
+  const handleReaction = (type: "LIKE" | "DISLIKE") => {
+    if (!session?.user || session.user.id === owner.id) return;
+
+    const newReaction = optimisticReaction === type ? null : type;
+    setOptimisticReaction(newReaction);
+
+    try {
+      toggleReaction((session.user as User).id, comment.id, newReaction);
+    } catch (error) {
+      console.error("Error toggling reaction:", error);
+      setOptimisticReaction(userReaction);
+    }
   };
 
   const contentLines = comment.content.split("\n");
@@ -48,7 +76,7 @@ const Comment: React.FC<CommentProps> = ({ comment, isOwner, owner }) => {
         <Flex direction="column" flex="1">
           <Flex alignItems="center" mb={2}>
             <Text fontWeight="bold" mr={2}>
-                {owner.name}
+              {owner.name}
             </Text>
             <Text color="gray.500" fontSize="sm">
               {formatDistanceToNow(new Date(comment.createdAt), {
@@ -95,16 +123,20 @@ const Comment: React.FC<CommentProps> = ({ comment, isOwner, owner }) => {
             <IconButton
               variant="ghost"
               size="sm"
-              colorPalette="blue"
+              colorPalette={optimisticReaction === "LIKE" ? "purple" : "gray"}
               aria-label="Like"
+              disabled={isOwner}
+              onClick={() => handleReaction("LIKE")}
             >
               <FaRegThumbsUp />
             </IconButton>
             <IconButton
               variant="ghost"
               size="sm"
-              colorPalette="red"
+              colorPalette={optimisticReaction === "DISLIKE" ? "red" : "gray"}
               aria-label="Dislike"
+              disabled={isOwner}
+              onClick={() => handleReaction("DISLIKE")}
             >
               <FaRegThumbsDown />
             </IconButton>

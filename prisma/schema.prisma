@@ -18,8 +18,10 @@ model User {
   email     String    @unique
   password  String
   createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   Comment   Comment[]
   savedPosts SavedPost[]
+  reactions Reaction[]
 }
 
 model Post {
@@ -39,10 +41,12 @@ model Comment {
   id        String   @id @default(cuid())
   content   String
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   postId    String
   Post      Post     @relation(fields: [postId], references: [id])
+  reactions Reaction[]
 }
 
 model SavedPost {
@@ -54,4 +58,17 @@ model SavedPost {
   createdAt DateTime @default(now())
 
   @@unique([userId, postId])
+}
+
+model Reaction {
+  id        String   @id @default(cuid())
+  type      String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  commentId String
+  comment   Comment  @relation(fields: [commentId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, commentId])
 }
