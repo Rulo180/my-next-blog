@@ -18,7 +18,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
 
-import { authenticate } from "@/app/lib/actions";
+import { authenticate } from "@/actions/users";
 
 
 export default function LoginForm() {

@@ -16,7 +16,7 @@ import Link from "next/link";
 import { signIn } from "next-auth/react"
 import { useSearchParams } from "next/navigation";
 
-import { registerUser } from "@/app/lib/actions";
+import { registerUser } from "@/actions/users";
 
 export default function SignUpForm() {
   const searchParams = useSearchParams();

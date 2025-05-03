@@ -14,7 +14,7 @@ import {
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 
-import { saveComment } from "@/app/lib/actions";
+import { saveComment } from "@/actions/comments";
 import type { Prisma } from "@/generated/prisma";
 
 interface CommentFormProps {

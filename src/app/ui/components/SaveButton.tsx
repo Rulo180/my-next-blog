@@ -3,7 +3,7 @@
 import { IconButton } from "@chakra-ui/react";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa6";
 import { useState } from "react";
-import { savePost } from "@/app/lib/actions";
+import { savePostAction } from "@/actions/posts";
 
 interface SaveButtonProps {
   postId: string;
@@ -19,7 +19,7 @@ const SaveButton: React.FC<SaveButtonProps> = ({
   const handleSavePost = async (e: React.MouseEvent) => {
     e.preventDefault();
     try {
-      await savePost(postId);
+      await savePostAction(postId);
       setIsSaved(!isSaved);
     } catch (error) {
       console.error("Failed to save post:", error);

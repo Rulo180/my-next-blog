@@ -4,13 +4,13 @@ import { FaBookmark } from "react-icons/fa";
 import { auth } from "@/auth";
 import PostCard from "@/app/ui/components/PostCard";
 import { EmptyState } from "@/app/ui/components/EmptyState";
-import { getSavedPosts } from "@/app/lib/actions";
+import { getSavedPostsAction } from "@/actions/posts";
 
 export default async function SavedPage() {
   const session = await auth();
   const userId = session?.user?.id;
 
-  const savedPosts = await getSavedPosts(userId as string);
+  const savedPosts = await getSavedPostsAction(userId as string);
 
   return (
     <Container as="main" py={8}>

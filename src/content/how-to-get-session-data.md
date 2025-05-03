@@ -14,7 +14,7 @@ Inside Server components you can directly access the session data through the @a
 ...
 import { useSession } from "next-auth/react";
 
-import { saveComment } from "@/app/lib/actions";
+import { saveComment } from "@/actions/comments";
 
 const CommentForm: React.FC<{ postId: string }> = ({ postId }) => {
   const { data: session } = useSession();

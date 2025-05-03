@@ -16,11 +16,11 @@ import {
   FaThumbsDown,
   FaThumbsUp,
 } from "react-icons/fa6";
-import { toggleReaction } from "@/app/lib/actions";
+import { toggleReactionAction } from "@/actions/reactions";
 import { useSession } from "next-auth/react";
 
 import type { Comment, User } from "@/app/lib/definitions";
-import { deleteComment } from "@/app/lib/actions";
+import { deleteComment } from "@/actions/comments";
 import { Prisma } from "@/generated/prisma";
 
 interface CommentProps {
@@ -67,7 +67,7 @@ const Comment: React.FC<CommentProps> = ({ comment, isOwner, owner }) => {
     setOptimisticReaction(newReaction);
 
     try {
-      toggleReaction((session.user as User).id, comment.id, newReaction);
+      toggleReactionAction((session.user as User).id, comment.id, newReaction);
     } catch (error) {
       console.error("Error toggling reaction:", error);
       setOptimisticReaction(userReaction);
