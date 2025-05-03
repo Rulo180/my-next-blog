@@ -14,7 +14,7 @@ interface PostsProps {
 export default async function Posts({ posts }: PostsProps) {
   const session = await auth();
   return (
-    <Grid templateColumns="repeat(2, 1fr)" gap={5}>
+    <Grid templateColumns={{ xlDown: "1fr" , xl: "repeat(2, 1fr)"}} gap={5}>
       {posts.map((post) => {
         const isSaved = !session
           ? false

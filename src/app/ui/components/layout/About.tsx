@@ -17,10 +17,10 @@ export default function About() {
       direction="column"
       gap="8"
       px="16"
-      borderLeft="1px solid"
+      borderLeft={{ lgDown: "0", lg: "1px solid" }}
       borderColor="black"
-      ml="6"
-      separator={<Separator orientation="horizontal" />}
+      ml={{ lgDown: "0", lg: "6" }}
+      separator={<Separator orientation="horizontal" /> }
     >
       <Stack gap="10">
         <Heading as="h2" fontSize="3xl">

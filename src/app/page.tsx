@@ -25,7 +25,7 @@ export default async function HomePage() {
           icon={<FaCircleExclamation />}
         />
       ) : (
-        <Grid templateColumns="repeat(3, 1fr)" gap={5} py={5}>
+        <Grid templateColumns={{ lgDown: "1fr", lg: "repeat(3, 1fr)"}} gap={5} py={5}>
           <GridItem colSpan={2}>
             <Posts posts={posts} />
           </GridItem>
