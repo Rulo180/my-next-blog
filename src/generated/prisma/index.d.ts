@@ -2523,6 +2523,7 @@ export namespace Prisma {
     duration: number | null
     imageUrl: string | null
     viewCount: number | null
+    featured: boolean | null
   }
 
   export type PostMaxAggregateOutputType = {
@@ -2535,6 +2536,7 @@ export namespace Prisma {
     duration: number | null
     imageUrl: string | null
     viewCount: number | null
+    featured: boolean | null
   }
 
   export type PostCountAggregateOutputType = {
@@ -2547,6 +2549,7 @@ export namespace Prisma {
     duration: number
     imageUrl: number
     viewCount: number
+    featured: number
     _all: number
   }
 
@@ -2571,6 +2574,7 @@ export namespace Prisma {
     duration?: true
     imageUrl?: true
     viewCount?: true
+    featured?: true
   }
 
   export type PostMaxAggregateInputType = {
@@ -2583,6 +2587,7 @@ export namespace Prisma {
     duration?: true
     imageUrl?: true
     viewCount?: true
+    featured?: true
   }
 
   export type PostCountAggregateInputType = {
@@ -2595,6 +2600,7 @@ export namespace Prisma {
     duration?: true
     imageUrl?: true
     viewCount?: true
+    featured?: true
     _all?: true
   }
 
@@ -2694,6 +2700,7 @@ export namespace Prisma {
     duration: number
     imageUrl: string
     viewCount: number
+    featured: boolean
     _count: PostCountAggregateOutputType | null
     _avg: PostAvgAggregateOutputType | null
     _sum: PostSumAggregateOutputType | null
@@ -2725,6 +2732,7 @@ export namespace Prisma {
     duration?: boolean
     imageUrl?: boolean
     viewCount?: boolean
+    featured?: boolean
     comments?: boolean | Post$commentsArgs<ExtArgs>
     savedBy?: boolean | Post$savedByArgs<ExtArgs>
     _count?: boolean | PostCountOutputTypeDefaultArgs<ExtArgs>
@@ -2740,6 +2748,7 @@ export namespace Prisma {
     duration?: boolean
     imageUrl?: boolean
     viewCount?: boolean
+    featured?: boolean
   }, ExtArgs["result"]["post"]>
 
   export type PostSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2752,6 +2761,7 @@ export namespace Prisma {
     duration?: boolean
     imageUrl?: boolean
     viewCount?: boolean
+    featured?: boolean
   }, ExtArgs["result"]["post"]>
 
   export type PostSelectScalar = {
@@ -2764,9 +2774,10 @@ export namespace Prisma {
     duration?: boolean
     imageUrl?: boolean
     viewCount?: boolean
+    featured?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "title" | "content" | "description" | "date" | "duration" | "imageUrl" | "viewCount", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "title" | "content" | "description" | "date" | "duration" | "imageUrl" | "viewCount" | "featured", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     comments?: boolean | Post$commentsArgs<ExtArgs>
     savedBy?: boolean | Post$savedByArgs<ExtArgs>
@@ -2791,6 +2802,7 @@ export namespace Prisma {
       duration: number
       imageUrl: string
       viewCount: number
+      featured: boolean
     }, ExtArgs["result"]["post"]>
     composites: {}
   }
@@ -3225,6 +3237,7 @@ export namespace Prisma {
     readonly duration: FieldRef<"Post", 'Int'>
     readonly imageUrl: FieldRef<"Post", 'String'>
     readonly viewCount: FieldRef<"Post", 'Int'>
+    readonly featured: FieldRef<"Post", 'Boolean'>
   }
     
 
@@ -6955,7 +6968,8 @@ export namespace Prisma {
     date: 'date',
     duration: 'duration',
     imageUrl: 'imageUrl',
-    viewCount: 'viewCount'
+    viewCount: 'viewCount',
+    featured: 'featured'
   };
 
   export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
@@ -7059,6 +7073,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -7154,6 +7175,7 @@ export namespace Prisma {
     duration?: IntFilter<"Post"> | number
     imageUrl?: StringFilter<"Post"> | string
     viewCount?: IntFilter<"Post"> | number
+    featured?: BoolFilter<"Post"> | boolean
     comments?: CommentListRelationFilter
     savedBy?: SavedPostListRelationFilter
   }
@@ -7168,6 +7190,7 @@ export namespace Prisma {
     duration?: SortOrder
     imageUrl?: SortOrder
     viewCount?: SortOrder
+    featured?: SortOrder
     comments?: CommentOrderByRelationAggregateInput
     savedBy?: SavedPostOrderByRelationAggregateInput
   }
@@ -7185,6 +7208,7 @@ export namespace Prisma {
     duration?: IntFilter<"Post"> | number
     imageUrl?: StringFilter<"Post"> | string
     viewCount?: IntFilter<"Post"> | number
+    featured?: BoolFilter<"Post"> | boolean
     comments?: CommentListRelationFilter
     savedBy?: SavedPostListRelationFilter
   }, "id" | "slug">
@@ -7199,6 +7223,7 @@ export namespace Prisma {
     duration?: SortOrder
     imageUrl?: SortOrder
     viewCount?: SortOrder
+    featured?: SortOrder
     _count?: PostCountOrderByAggregateInput
     _avg?: PostAvgOrderByAggregateInput
     _max?: PostMaxOrderByAggregateInput
@@ -7219,6 +7244,7 @@ export namespace Prisma {
     duration?: IntWithAggregatesFilter<"Post"> | number
     imageUrl?: StringWithAggregatesFilter<"Post"> | string
     viewCount?: IntWithAggregatesFilter<"Post"> | number
+    featured?: BoolWithAggregatesFilter<"Post"> | boolean
   }
 
   export type CommentWhereInput = {
@@ -7490,6 +7516,7 @@ export namespace Prisma {
     duration: number
     imageUrl: string
     viewCount?: number
+    featured?: boolean
     comments?: CommentCreateNestedManyWithoutPostInput
     savedBy?: SavedPostCreateNestedManyWithoutPostInput
   }
@@ -7504,6 +7531,7 @@ export namespace Prisma {
     duration: number
     imageUrl: string
     viewCount?: number
+    featured?: boolean
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
     savedBy?: SavedPostUncheckedCreateNestedManyWithoutPostInput
   }
@@ -7518,6 +7546,7 @@ export namespace Prisma {
     duration?: IntFieldUpdateOperationsInput | number
     imageUrl?: StringFieldUpdateOperationsInput | string
     viewCount?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
     comments?: CommentUpdateManyWithoutPostNestedInput
     savedBy?: SavedPostUpdateManyWithoutPostNestedInput
   }
@@ -7532,6 +7561,7 @@ export namespace Prisma {
     duration?: IntFieldUpdateOperationsInput | number
     imageUrl?: StringFieldUpdateOperationsInput | string
     viewCount?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
     savedBy?: SavedPostUncheckedUpdateManyWithoutPostNestedInput
   }
@@ -7546,6 +7576,7 @@ export namespace Prisma {
     duration: number
     imageUrl: string
     viewCount?: number
+    featured?: boolean
   }
 
   export type PostUpdateManyMutationInput = {
@@ -7558,6 +7589,7 @@ export namespace Prisma {
     duration?: IntFieldUpdateOperationsInput | number
     imageUrl?: StringFieldUpdateOperationsInput | string
     viewCount?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type PostUncheckedUpdateManyInput = {
@@ -7570,6 +7602,7 @@ export namespace Prisma {
     duration?: IntFieldUpdateOperationsInput | number
     imageUrl?: StringFieldUpdateOperationsInput | string
     viewCount?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type CommentCreateInput = {
@@ -7871,6 +7904,11 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type PostCountOrderByAggregateInput = {
     id?: SortOrder
     slug?: SortOrder
@@ -7881,6 +7919,7 @@ export namespace Prisma {
     duration?: SortOrder
     imageUrl?: SortOrder
     viewCount?: SortOrder
+    featured?: SortOrder
   }
 
   export type PostAvgOrderByAggregateInput = {
@@ -7898,6 +7937,7 @@ export namespace Prisma {
     duration?: SortOrder
     imageUrl?: SortOrder
     viewCount?: SortOrder
+    featured?: SortOrder
   }
 
   export type PostMinOrderByAggregateInput = {
@@ -7910,6 +7950,7 @@ export namespace Prisma {
     duration?: SortOrder
     imageUrl?: SortOrder
     viewCount?: SortOrder
+    featured?: SortOrder
   }
 
   export type PostSumOrderByAggregateInput = {
@@ -7931,6 +7972,14 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type UserScalarRelationFilter = {
@@ -8203,6 +8252,10 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type CommentUpdateManyWithoutPostNestedInput = {
     create?: XOR<CommentCreateWithoutPostInput, CommentUncheckedCreateWithoutPostInput> | CommentCreateWithoutPostInput[] | CommentUncheckedCreateWithoutPostInput[]
     connectOrCreate?: CommentCreateOrConnectWithoutPostInput | CommentCreateOrConnectWithoutPostInput[]
@@ -8452,6 +8505,11 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -8477,6 +8535,14 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type CommentCreateWithoutUserInput = {
@@ -8756,6 +8822,7 @@ export namespace Prisma {
     duration: number
     imageUrl: string
     viewCount?: number
+    featured?: boolean
     savedBy?: SavedPostCreateNestedManyWithoutPostInput
   }
 
@@ -8769,6 +8836,7 @@ export namespace Prisma {
     duration: number
     imageUrl: string
     viewCount?: number
+    featured?: boolean
     savedBy?: SavedPostUncheckedCreateNestedManyWithoutPostInput
   }
 
@@ -8857,6 +8925,7 @@ export namespace Prisma {
     duration?: IntFieldUpdateOperationsInput | number
     imageUrl?: StringFieldUpdateOperationsInput | string
     viewCount?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
     savedBy?: SavedPostUpdateManyWithoutPostNestedInput
   }
 
@@ -8870,6 +8939,7 @@ export namespace Prisma {
     duration?: IntFieldUpdateOperationsInput | number
     imageUrl?: StringFieldUpdateOperationsInput | string
     viewCount?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
     savedBy?: SavedPostUncheckedUpdateManyWithoutPostNestedInput
   }
 
@@ -8926,6 +8996,7 @@ export namespace Prisma {
     duration: number
     imageUrl: string
     viewCount?: number
+    featured?: boolean
     comments?: CommentCreateNestedManyWithoutPostInput
   }
 
@@ -8939,6 +9010,7 @@ export namespace Prisma {
     duration: number
     imageUrl: string
     viewCount?: number
+    featured?: boolean
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
   }
 
@@ -9001,6 +9073,7 @@ export namespace Prisma {
     duration?: IntFieldUpdateOperationsInput | number
     imageUrl?: StringFieldUpdateOperationsInput | string
     viewCount?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
     comments?: CommentUpdateManyWithoutPostNestedInput
   }
 
@@ -9014,6 +9087,7 @@ export namespace Prisma {
     duration?: IntFieldUpdateOperationsInput | number
     imageUrl?: StringFieldUpdateOperationsInput | string
     viewCount?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
   }
 

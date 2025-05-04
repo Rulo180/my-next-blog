@@ -5,10 +5,12 @@ import { revalidatePath } from "next/cache";
 import { Prisma } from "@/generated/prisma";
 import { auth } from "@/auth";
 import {
+  getSavedPostsByUserId,
+  getPosts,
+  getFeaturedPost,
+  incrementPostViewCount,
   savePost,
   unsavePost,
-  getSavedPostsByUserId,
-  incrementPostViewCount,
 } from "@/data-access/posts";
 
 export async function savePostAction(postId: string) {
@@ -44,6 +46,15 @@ export async function savePostAction(postId: string) {
   }
 }
 
+export async function getPostsAction(): Promise<Prisma.PostGetPayload<{ include: { savedBy: true } }>[]> {
+  try {
+    return await getPosts();
+  } catch (error) {
+    console.error("Error in getPostsAction:", error);
+    throw new Error("Failed to retrieve posts.");
+  }
+}
+
 export async function getSavedPostsAction(
   userId: string
 ): Promise<Prisma.SavedPostGetPayload<{ include: { post: true } }>[]> {
@@ -63,3 +74,13 @@ export async function addPostVisualization(postId: string) {
     throw new Error("Failed to increment post view count.");
   }
 }
+
+export async function getFeaturedPostAction(): Promise<Prisma.PostGetPayload<object> | null> {
+  try {
+    return await getFeaturedPost();
+  } catch (error) {
+    console.error("Error in getFeaturedPostAction:", error);
+    throw new Error("Failed to retrieve featured post.");
+  }
+}
+

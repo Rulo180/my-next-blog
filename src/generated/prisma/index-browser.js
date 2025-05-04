@@ -135,7 +135,8 @@ exports.Prisma.PostScalarFieldEnum = {
   date: 'date',
   duration: 'duration',
   imageUrl: 'imageUrl',
-  viewCount: 'viewCount'
+  viewCount: 'viewCount',
+  featured: 'featured'
 };
 
 exports.Prisma.CommentScalarFieldEnum = {

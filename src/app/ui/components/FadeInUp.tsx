@@ -8,7 +8,7 @@ interface FadeInUpProps {
   duration?: number;
 }
 
-const FadeInUp: React.FC<FadeInUpProps> = ({ children, duration = 0.5 }) => {
+const FadeInUp: React.FC<FadeInUpProps> = ({ children, duration = 1 }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

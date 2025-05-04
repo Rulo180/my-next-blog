@@ -1,20 +1,15 @@
-import { Container, Grid, GridItem } from "@chakra-ui/react";
+import { Container, Flex, Grid, GridItem, Separator } from "@chakra-ui/react";
 import { FaCircleExclamation } from "react-icons/fa6";
 
-import { Prisma } from "@/generated/prisma";
-import { prisma } from "@/lib/prisma";
+import { getFeaturedPostAction, getPostsAction } from "@/actions/posts";
 import { EmptyState } from "@/app/ui/components/EmptyState";
 import Posts from "@/app/ui/components/layout/Posts";
 import About from "@/app/ui/components/layout/About";
+import FeaturedPost from "@/app/ui/components/FeaturedPost";
 
 export default async function HomePage() {
-  const posts: Prisma.PostGetPayload<{
-    include: { savedBy: true };
-  }>[] = await prisma.post.findMany({
-    include: {
-      savedBy: true,
-    },
-  });
+  const posts = await getPostsAction();
+  const featuredPost = await getFeaturedPostAction();
 
   return (
     <Container as="main">
@@ -25,7 +20,25 @@ export default async function HomePage() {
           icon={<FaCircleExclamation />}
         />
       ) : (
-        <Grid templateColumns={{ lgDown: "1fr", lg: "repeat(3, 1fr)"}} gap={5} py={5}>
+        <Grid
+          templateColumns={{ lgDown: "1fr", lg: "repeat(3, 1fr)" }}
+          gap={5}
+          py={5}
+        >
+          {featuredPost && (
+            <GridItem colSpan={3} py={4}>
+              <Flex direction="column" gap={8}>
+                <FeaturedPost
+                  date={featuredPost.date}
+                  readingTime={featuredPost.duration}
+                  title={featuredPost.title}
+                  description={featuredPost.description}
+                  imageUrl={featuredPost.imageUrl}
+                />
+                <Separator />
+              </Flex>
+            </GridItem>
+          )}
           <GridItem colSpan={2}>
             <Posts posts={posts} />
           </GridItem>
