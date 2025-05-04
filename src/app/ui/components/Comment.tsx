@@ -11,11 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { formatDistanceToNow } from "date-fns";
 import { useState, useTransition, useOptimistic, useMemo } from "react";
-import {
-  FaEllipsis,
-  FaThumbsDown,
-  FaThumbsUp,
-} from "react-icons/fa6";
+import { FaEllipsis, FaThumbsDown, FaThumbsUp } from "react-icons/fa6";
 import { toggleReactionAction } from "@/actions/reactions";
 import { useSession } from "next-auth/react";
 
@@ -131,30 +127,45 @@ const Comment: React.FC<CommentProps> = ({ comment, isOwner, owner }) => {
               </>
             )}
           </Box>
-          <Flex justifyContent="flex-start" gap={2}>
-            <IconButton
-              variant="ghost"
-              size="sm"
-              colorPalette={optimisticReaction === "LIKE" ? "purple" : "gray"}
-              aria-label="Like"
-              onClick={() => handleReaction("LIKE")}
-            >
-              <Icon color={optimisticReaction === "LIKE" ? "#6601ea" : "gray"}>
-                <FaThumbsUp />
-              </Icon>
-            </IconButton>
-            <IconButton
-              variant="ghost"
-              size="sm"
-              colorPalette={optimisticReaction === "DISLIKE" ? "red" : "gray"}
-              aria-label="Dislike"
-              onClick={() => handleReaction("DISLIKE")}
-            >
-              <Icon color={optimisticReaction === "DISLIKE" ? "red" : "gray"}>
-
-              <FaThumbsDown />
-              </Icon>
-            </IconButton>
+          <Flex justifyContent="flex-start" gap={3}>
+            <Flex alignItems="center" gap="1">
+              <IconButton
+                variant="ghost"
+                size="sm"
+                colorPalette={optimisticReaction === "LIKE" ? "purple" : "gray"}
+                aria-label="Like"
+                onClick={() => handleReaction("LIKE")}
+              >
+                <Icon
+                  color={optimisticReaction === "LIKE" ? "#6601ea" : "gray"}
+                >
+                  <FaThumbsUp />
+                </Icon>
+              </IconButton>
+              <Text fontSize="sm" color="gray.500">
+                {comment.reactions.filter(
+                  (reaction) => reaction.type === "LIKE"
+                ).length}
+              </Text>
+            </Flex>
+            <Flex alignItems="center" gap="1">
+              <IconButton
+                variant="ghost"
+                size="sm"
+                colorPalette={optimisticReaction === "DISLIKE" ? "red" : "gray"}
+                aria-label="Dislike"
+                onClick={() => handleReaction("DISLIKE")}
+              >
+                <Icon color={optimisticReaction === "DISLIKE" ? "red" : "gray"}>
+                  <FaThumbsDown />
+                </Icon>
+              </IconButton>
+              <Text fontSize="sm" color="gray.500">
+                {comment.reactions.filter(
+                  (reaction) => reaction.type === "DISLIKE"
+                ).length}
+              </Text>
+            </Flex>
             {isOwner && (
               <Menu.Root>
                 <Menu.Trigger asChild>
