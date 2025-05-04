@@ -26,7 +26,7 @@ export default async function BlogPost({
 
   const { id, content, title, description, date, duration, imageUrl } = post;
 
-  const isSaved = await getSavedPostStatus(id);
+  const isSaved = session ? await getSavedPostStatus(id) : false;
 
   return (
     <Container as="main" py={8}>
