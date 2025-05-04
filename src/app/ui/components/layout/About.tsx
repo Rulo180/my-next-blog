@@ -6,6 +6,7 @@ import {
   Stack,
   Text,
   Mark,
+  Box,
 } from "@chakra-ui/react";
 import Image from "next/image";
 
@@ -22,8 +23,8 @@ export default function About() {
       ml={{ lgDown: "0", lg: "6" }}
       separator={<Separator orientation="horizontal" /> }
     >
-      <Stack gap="10">
-        <Heading as="h2" fontSize="3xl">
+      <Box>
+        <Heading as="h2" fontSize="3xl" mb={16}>
           About me
         </Heading>
         <ChakraImage asChild>
@@ -34,7 +35,7 @@ export default function About() {
             height={950}
           />
         </ChakraImage>
-        <Stack gap="4">
+        <Stack gap="4" mt="8">
           <Text>
             I am a <Mark variant="solid" colorPalette="purple">frontend developer</Mark> with over 10 years of experience building
             high-quality web applications.
@@ -48,7 +49,7 @@ export default function About() {
             expand my skill set and strengthen my full-stack capabilities.
           </Text>
         </Stack>
-      </Stack>
+      </Box>
       <Stack gap="10">
         <Heading as="h2" fontSize="3xl">
           Contact me

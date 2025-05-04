@@ -1,4 +1,4 @@
-import { Container, Grid, GridItem, Heading } from "@chakra-ui/react";
+import { Container, Flex, Grid, GridItem, Heading, Text } from "@chakra-ui/react";
 import { FaBookmark } from "react-icons/fa";
 
 import { auth } from "@/auth";
@@ -14,9 +14,12 @@ export default async function SavedPage() {
 
   return (
     <Container as="main" py={8}>
-      <Heading as="h1" mb={6}>
-        Saved Posts
-      </Heading>
+      <Flex direction="column" gap={2} mb={8}>
+        <Heading as="h2" fontSize="3xl">
+          Saved Posts
+        </Heading>
+        <Text>Here you can see all the posts you saved.</Text>
+      </Flex>
       {savedPosts.length === 0 ? (
         <EmptyState
           title="No saved posts yet"
