@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Ignore SQLite database files
 dev.db
+
+# Prisma generated files
+src/generated/prisma/
