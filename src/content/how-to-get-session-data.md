@@ -1,71 +1,79 @@
 ---
-title: "How to get the session data from a Client component"
-description: "In this short post we are going to show how you can access your session data from the server and the client."
+title: "How to Get the Session Data from a Client Component"
+description: "Learn how to access session data in both Server and Client components in Next.js."
 duration: 3
 imageUrl: "/images/posts/data-image--desktop.jpg"
-date: "2025-04-30"
+date: "2025-04-22"
+
 ---
-# How to get the session data from a Client component
 
-Inside Server components you can directly access the session data through the @auth library we created, but in Client components you can use the `useSession` hook like so:
+# How to Get the Session Data from a Client Component
 
-``` ts
+In Next.js, you can access session data in both Server and Client components. This post focuses on how to retrieve session data in Client components using the `useSession` hook.
+
+## Accessing Session Data in a Client Component
+
+Here’s an example from the `CommentForm` component:
+
+```tsx
 // CommentForm.tsx
-...
 import { useSession } from "next-auth/react";
-
 import { saveComment } from "@/actions/comments";
 
 const CommentForm: React.FC<{ postId: string }> = ({ postId }) => {
   const { data: session } = useSession();
-  const [state, formAction, isPending] = useActionState(saveComment, null);
 
   return (
-  ...
-  <Flex mt="4" justifyContent={session ? 'flex-end' : 'space-between'} alignItems="center">
-        {!session && (
-          <Text>
-            <ChakraLink asChild>
-              <Link href={`/login?callbackUrl=/blog/${postId}`}>Log in</Link>
-            </ChakraLink>{" "}
-            to publish a comment
-          </Text>
-        )}
-        <Button
-          type="submit"
-          colorPalette="gray"
-          variant="surface"
-          disabled={!session}
-        >
-          Submit
-        </Button>
-      </Flex>
-    ...
+    <form>
+      <textarea placeholder="Write a comment..." disabled={!session} />
+      <button type="submit" disabled={!session}>
+        Submit
+      </button>
+      {!session && (
+        <p>
+          <a href={`/login?callbackUrl=/blog/${postId}`}>Log in</a> to publish a comment.
+        </p>
+      )}
+    </form>
+  );
+};
+
+export default CommentForm;
 ```
 
-In this case, I wanna to render a message with a link to the login page if there is no logged in user.
+### Key Points
+- **Session Check**: The `useSession` hook provides the current session data.
+- **Conditional Rendering**: If no user is logged in, a message with a login link is displayed.
 
-To use the `useSession` hook you have to wrap your app with the `<SessionProvider />`. In my case, the best option to do this is the provider.ts file
+## Wrapping Your App with `SessionProvider`
 
-``` ts
+To use the `useSession` hook, wrap your app with the `SessionProvider`. In our project, this is done in the `provider.ts` file:
+
+```tsx
 // provider.ts
-"use client"
+"use client";
 
-import { ChakraProvider, defaultSystem } from "@chakra-ui/react"
+import { ChakraProvider } from "@chakra-ui/react";
 import { ThemeProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
 
-export default function RootLayout(props: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
-      <ChakraProvider value={defaultSystem}>
-        <ThemeProvider attribute="class" disableTransitionOnChange>
-          {props.children}
+      <ChakraProvider>
+        <ThemeProvider attribute="class">
+          {children}
         </ThemeProvider>
       </ChakraProvider>
     </SessionProvider>
-  )
+  );
 }
 ```
 
-There you have it! Now you can access your session data from anywhere in your app.
+### Key Points
+- **Global Access**: Wrapping your app with `SessionProvider` makes session data accessible throughout the app.
+- **Integration**: The `SessionProvider` integrates seamlessly with other providers like Chakra UI and ThemeProvider.
+
+## Conclusion
+
+By using the `useSession` hook and wrapping your app with `SessionProvider`, you can easily access session data in Client components. This approach ensures a consistent and secure way to manage user sessions across your application.
