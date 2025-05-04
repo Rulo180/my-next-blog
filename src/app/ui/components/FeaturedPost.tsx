@@ -1,4 +1,5 @@
 import { Box, Card, Flex, Image, Text } from "@chakra-ui/react";
+import Link from "next/link";
 
 interface FeaturedPostProps {
   date: Date;
@@ -6,6 +7,7 @@ interface FeaturedPostProps {
   title: string;
   description: string;
   imageUrl: string;
+  url: string;
 }
 
 /**
@@ -20,6 +22,7 @@ interface FeaturedPostProps {
  * @param {string} props.description - A brief description or excerpt of the blog post.
  * @param {string} props.imageUrl - The URL of the image associated with the blog post.
  * @param {number} props.viewCount - The number of views the blog post has received.
+ * @param {string} props.url - The URL to navigate to when the card is clicked.
  *
  * @returns {JSX.Element} A styled card component displaying the featured blog post details.
  */
@@ -29,6 +32,7 @@ const FeaturedPost: React.FC<FeaturedPostProps> = ({
   title,
   description,
   imageUrl,
+  url,
 }) => {
   const fontSize = "1rem";
   const lineHeight = "1.5";
@@ -37,57 +41,59 @@ const FeaturedPost: React.FC<FeaturedPostProps> = ({
   const twoLineHeight = `calc(${fontSize} * ${lineHeight} * 2)`;
 
   return (
-    <Box position="relative" maxW="4xl" margin="auto">
-      <Text
-        position="absolute"
-        top="-20px"
-        bg="white"
-        border="1px solid black"
-        px={8}
-        py={2}
-        fontSize="xl"
-        zIndex={1}
-        letterSpacing="6px"
-      >
-        FEATURED POST
-      </Text>
-      <Card.Root
-        overflow="hidden"
-        borderRadius={0}
-        backgroundColor="white"
-        color="black"
-      >
-        <Image
-          objectFit="cover"
-          width="940px"
-          height="400px"
-          src={imageUrl}
-          alt="Post image"
-        />
-        <Box p={4}>
-          <Card.Header>
-            <Flex justifyContent="space-between" alignItems="center">
-              <Flex gap={2} fontSize="xs" color="gray.500">
-                <Text>{new Date(date).toLocaleDateString("es-AR")}</Text>-
-                <Text>{readingTime} mins</Text>
+    <Link href={url} passHref>
+      <Box position="relative" maxW="4xl" margin="auto">
+        <Text
+          position="absolute"
+          top="-20px"
+          bg="white"
+          border="1px solid black"
+          px={8}
+          py={2}
+          fontSize="xl"
+          zIndex={1}
+          letterSpacing="6px"
+        >
+          FEATURED POST
+        </Text>
+        <Card.Root
+          overflow="hidden"
+          borderRadius={0}
+          backgroundColor="white"
+          color="black"
+        >
+          <Image
+            objectFit="cover"
+            width="940px"
+            height="400px"
+            src={imageUrl}
+            alt="Post image"
+          />
+          <Box p={4}>
+            <Card.Header>
+              <Flex justifyContent="space-between" alignItems="center">
+                <Flex gap={2} fontSize="xs" color="gray.500">
+                  <Text>{new Date(date).toLocaleDateString("es-AR")}</Text>-
+                  <Text>{readingTime} mins</Text>
+                </Flex>
               </Flex>
-            </Flex>
-          </Card.Header>
-          <Card.Body>
-            <Card.Title lineClamp="1" mb="2" fontSize="2xl">
-              {title}
-            </Card.Title>
-            <Card.Description
-              height={twoLineHeight}
-              lineClamp="2"
-              color="black"
-            >
-              {description}
-            </Card.Description>
-          </Card.Body>
-        </Box>
-      </Card.Root>
-    </Box>
+            </Card.Header>
+            <Card.Body>
+              <Card.Title lineClamp="1" mb="2" fontSize="2xl">
+                {title}
+              </Card.Title>
+              <Card.Description
+                height={twoLineHeight}
+                lineClamp="2"
+                color="black"
+              >
+                {description}
+              </Card.Description>
+            </Card.Body>
+          </Box>
+        </Card.Root>
+      </Box>
+    </Link>
   );
 };
 

@@ -29,6 +29,7 @@ export default async function HomePage() {
             <GridItem colSpan={3} py={4}>
               <Flex direction="column" gap={8}>
                 <FeaturedPost
+                  url={`/blog/${featuredPost.slug}`}
                   date={featuredPost.date}
                   readingTime={featuredPost.duration}
                   title={featuredPost.title}

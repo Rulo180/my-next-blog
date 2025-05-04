@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { Box, Card, Flex, Image, Separator, Text } from "@chakra-ui/react";
+import Link from "next/link";
 
 import { auth } from "@/auth";
 import SaveButton from "@/app/ui/components/SaveButton";
@@ -14,6 +15,7 @@ interface PostCardProps {
   imageUrl: string;
   viewCount?: number;
   isSaved: boolean;
+  url: string;
 }
 
 /**
@@ -28,6 +30,8 @@ interface PostCardProps {
  * @param {string} props.description - A brief description or excerpt of the blog post.
  * @param {string} props.imageUrl - The URL of the image associated with the blog post.
  * @param {number} props.viewCount - The number of views the blog post has received.
+ * @param {boolean} props.isSaved - Indicates whether the post is saved by the user.
+ * @param {string} props.url - The URL to navigate to when the card is clicked.
  *
  * @returns {JSX.Element} A styled card component displaying the blog post details.
  */
@@ -40,6 +44,7 @@ const PostCard: React.FC<PostCardProps> = async ({
   imageUrl,
   viewCount = 0,
   isSaved,
+  url,
 }) => {
   const session = await auth();
   const fontSize = "1rem";
@@ -57,52 +62,54 @@ const PostCard: React.FC<PostCardProps> = async ({
   const twoLineHeight = `calc(${fontSize} * ${lineHeight} * 2)`;
 
   return (
-    <FadeInUp>
-      <Card.Root
-        flexDirection="row"
-        overflow="hidden"
-        maxW="xl"
-        borderRadius={0}
-        backgroundColor="white"
-        color="black"
-      >
-        <Image objectFit="cover" maxW="200px" src={imageUrl} alt="Post image" />
-        <Box w="full">
-          <Card.Header>
-            <Flex justifyContent="space-between" alignItems="center">
-              <Flex gap={2} fontSize="xs" color="gray.500">
-                <Text>{new Date(date).toLocaleDateString("es-AR")}</Text>-
-                <Text>{readingTime} mins</Text>
+    <Link href={url} passHref>
+      <FadeInUp>
+        <Card.Root
+          flexDirection="row"
+          overflow="hidden"
+          maxW="xl"
+          borderRadius={0}
+          backgroundColor="white"
+          color="black"
+        >
+          <Image objectFit="cover" maxW="200px" src={imageUrl} alt="Post image" />
+          <Box w="full">
+            <Card.Header>
+              <Flex justifyContent="space-between" alignItems="center">
+                <Flex gap={2} fontSize="xs" color="gray.500">
+                  <Text>{new Date(date).toLocaleDateString("es-AR")}</Text>-
+                  <Text>{readingTime} mins</Text>
+                </Flex>
+                {session && <SaveButton postId={postId} isSaved={isSaved} />}
               </Flex>
-              {session && <SaveButton postId={postId} isSaved={isSaved} />}
-            </Flex>
-          </Card.Header>
-          <Card.Body>
-            <Card.Title lineClamp="1" mb="2" fontSize="2xl">
-              {title}
-            </Card.Title>
-            <Card.Description
-              height={twoLineHeight}
-              lineClamp="2"
-              color="black"
-            >
-              {description}
-            </Card.Description>
-          </Card.Body>
-          <Separator my={2} mx={6} />
-          <Card.Footer>
-            <Flex gap="2">
-              <Text fontSize="xs" color="gray.500">
-                {viewCount} views
-              </Text>
-              <Text fontSize="xs" color="gray.500">
-                {commentCount} comments
-              </Text>
-            </Flex>
-          </Card.Footer>
-        </Box>
-      </Card.Root>
-    </FadeInUp>
+            </Card.Header>
+            <Card.Body>
+              <Card.Title lineClamp="1" mb="2" fontSize="2xl">
+                {title}
+              </Card.Title>
+              <Card.Description
+                height={twoLineHeight}
+                lineClamp="2"
+                color="black"
+              >
+                {description}
+              </Card.Description>
+            </Card.Body>
+            <Separator my={2} mx={6} />
+            <Card.Footer>
+              <Flex gap="2">
+                <Text fontSize="xs" color="gray.500">
+                  {viewCount} views
+                </Text>
+                <Text fontSize="xs" color="gray.500">
+                  {commentCount} comments
+                </Text>
+              </Flex>
+            </Card.Footer>
+          </Box>
+        </Card.Root>
+      </FadeInUp>
+    </Link>
   );
 };
 
