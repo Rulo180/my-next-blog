@@ -3,6 +3,7 @@ title: "Client vs Server Components in Next.js"
 description: "Exploring the differences and how Client and Server components work together in Next.js."
 duration: 5
 date: "2025-05-04"
+imageUrl: "/images/posts/server.jpg"
 ---
 
 # Client vs Server Components in Next.js

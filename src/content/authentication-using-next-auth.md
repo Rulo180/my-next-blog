@@ -3,6 +3,7 @@ title: "Authentication Using Next-Auth"
 description: "A guide to implementing authentication in Next.js using Next-Auth."
 duration: 5
 date: "2025-05-04"
+imageUrl: "/images/posts/restricted-area.jpg"
 ---
 
 # Authentication Using Next-Auth

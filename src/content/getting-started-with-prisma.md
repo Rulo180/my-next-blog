@@ -3,7 +3,7 @@ title: "Getting started with Prisma ORM"
 description: "Learn how to configure Prisma ORM in your project and set up your database schema."
 date: "2025-04-20"
 duration: 3
-imageUrl: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+imageUrl: "/images/posts/database.jpg"
 ---
 
 # Getting Started with Prisma ORM

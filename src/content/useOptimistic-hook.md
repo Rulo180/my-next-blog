@@ -3,6 +3,7 @@ title: "Understanding the useOptimistic Hook"
 description: "A deep dive into the useOptimistic hook and its application in React components."
 duration: 4
 date: "2025-05-03"
+imageUrl: "/images/posts/optimistic.jpg"
 ---
 
 # Understanding the useOptimistic Hook

@@ -2,7 +2,7 @@
 title: "How to Get the Session Data from a Client Component"
 description: "Learn how to access session data in both Server and Client components in Next.js."
 duration: 3
-imageUrl: "/images/posts/data-image--desktop.jpg"
+imageUrl: "/images/posts/data-image.jpg"
 date: "2025-04-22"
 
 ---

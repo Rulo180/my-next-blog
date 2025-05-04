@@ -3,6 +3,7 @@ title: "Building a Data Access Layer in Next.js"
 description: "How we structured the data access layer in our Next.js project for better maintainability and scalability."
 duration: 5
 date: "2025-05-04"
+imageUrl: "/images/posts/layers.jpg"
 ---
 
 # Building a Data Access Layer in Next.js

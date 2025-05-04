@@ -3,6 +3,7 @@ title: "Using Chakra UI in Your Next.js Project"
 description: "Learn how to integrate and use the Chakra UI component library in your Next.js application."
 duration: 4
 date: "2025-05-04"
+imageUrl: "/images/posts/components.jpg"
 ---
 
 # Using Chakra UI in Your Next.js Project
