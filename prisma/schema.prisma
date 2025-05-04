@@ -32,8 +32,9 @@ model Post {
   description String
   date        DateTime
   duration    Int
-  comments    Comment[]
   imageUrl    String
+  viewCount   Int      @default(0)
+  comments    Comment[]
   savedBy     SavedPost[]
 }
 

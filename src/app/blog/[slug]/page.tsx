@@ -7,6 +7,7 @@ import CommentSection from "@/app/ui/components/CommentSection";
 import Markdown from "@/app/ui/components/Markdown";
 import Socials from "@/app/ui/components/Socials";
 import SaveButton from "@/app/ui/components/SaveButton";
+import { incrementPostViewCount } from "@/data-access/posts";
 
 export default async function BlogPost({
   params,
@@ -21,6 +22,8 @@ export default async function BlogPost({
   if (!post) {
     throw new Error(`Post with slug "${slug}" not found`);
   }
+
+  await incrementPostViewCount(post.id)
 
   const { id, content, title, description, date, duration, imageUrl } = post;
 

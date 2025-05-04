@@ -31,6 +31,7 @@ export default async function Posts({ posts }: PostsProps) {
                 title={post.title}
                 description={post.description}
                 imageUrl={post.imageUrl}
+                viewCount={post.viewCount}
                 isSaved={isSaved}
               />
             </Link>

@@ -33,3 +33,10 @@ export async function getSavedPostsByUserId(userId: string) {
     include: { post: true },
   });
 }
+
+export async function incrementPostViewCount(postId: string) {
+  return await prisma.post.update({
+    where: { id: postId },
+    data: { viewCount: { increment: 1 } },
+  });
+}

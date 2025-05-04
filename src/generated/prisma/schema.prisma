@@ -18,7 +18,7 @@ model User {
   email      String      @unique
   password   String
   createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  updatedAt  DateTime    @default(now()) @updatedAt
   Comment    Comment[]
   savedPosts SavedPost[]
   reactions  Reaction[]
@@ -32,8 +32,9 @@ model Post {
   description String
   date        DateTime
   duration    Int
-  comments    Comment[]
   imageUrl    String
+  viewCount   Int         @default(0)
+  comments    Comment[]
   savedBy     SavedPost[]
 }
 
@@ -41,7 +42,7 @@ model Comment {
   id        String     @id @default(cuid())
   content   String
   createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  updatedAt DateTime   @default(now()) @updatedAt
   userId    String
   user      User       @relation(fields: [userId], references: [id])
   postId    String

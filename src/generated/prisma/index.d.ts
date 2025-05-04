@@ -2505,10 +2505,12 @@ export namespace Prisma {
 
   export type PostAvgAggregateOutputType = {
     duration: number | null
+    viewCount: number | null
   }
 
   export type PostSumAggregateOutputType = {
     duration: number | null
+    viewCount: number | null
   }
 
   export type PostMinAggregateOutputType = {
@@ -2520,6 +2522,7 @@ export namespace Prisma {
     date: Date | null
     duration: number | null
     imageUrl: string | null
+    viewCount: number | null
   }
 
   export type PostMaxAggregateOutputType = {
@@ -2531,6 +2534,7 @@ export namespace Prisma {
     date: Date | null
     duration: number | null
     imageUrl: string | null
+    viewCount: number | null
   }
 
   export type PostCountAggregateOutputType = {
@@ -2542,16 +2546,19 @@ export namespace Prisma {
     date: number
     duration: number
     imageUrl: number
+    viewCount: number
     _all: number
   }
 
 
   export type PostAvgAggregateInputType = {
     duration?: true
+    viewCount?: true
   }
 
   export type PostSumAggregateInputType = {
     duration?: true
+    viewCount?: true
   }
 
   export type PostMinAggregateInputType = {
@@ -2563,6 +2570,7 @@ export namespace Prisma {
     date?: true
     duration?: true
     imageUrl?: true
+    viewCount?: true
   }
 
   export type PostMaxAggregateInputType = {
@@ -2574,6 +2582,7 @@ export namespace Prisma {
     date?: true
     duration?: true
     imageUrl?: true
+    viewCount?: true
   }
 
   export type PostCountAggregateInputType = {
@@ -2585,6 +2594,7 @@ export namespace Prisma {
     date?: true
     duration?: true
     imageUrl?: true
+    viewCount?: true
     _all?: true
   }
 
@@ -2683,6 +2693,7 @@ export namespace Prisma {
     date: Date
     duration: number
     imageUrl: string
+    viewCount: number
     _count: PostCountAggregateOutputType | null
     _avg: PostAvgAggregateOutputType | null
     _sum: PostSumAggregateOutputType | null
@@ -2713,6 +2724,7 @@ export namespace Prisma {
     date?: boolean
     duration?: boolean
     imageUrl?: boolean
+    viewCount?: boolean
     comments?: boolean | Post$commentsArgs<ExtArgs>
     savedBy?: boolean | Post$savedByArgs<ExtArgs>
     _count?: boolean | PostCountOutputTypeDefaultArgs<ExtArgs>
@@ -2727,6 +2739,7 @@ export namespace Prisma {
     date?: boolean
     duration?: boolean
     imageUrl?: boolean
+    viewCount?: boolean
   }, ExtArgs["result"]["post"]>
 
   export type PostSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2738,6 +2751,7 @@ export namespace Prisma {
     date?: boolean
     duration?: boolean
     imageUrl?: boolean
+    viewCount?: boolean
   }, ExtArgs["result"]["post"]>
 
   export type PostSelectScalar = {
@@ -2749,9 +2763,10 @@ export namespace Prisma {
     date?: boolean
     duration?: boolean
     imageUrl?: boolean
+    viewCount?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "title" | "content" | "description" | "date" | "duration" | "imageUrl", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "title" | "content" | "description" | "date" | "duration" | "imageUrl" | "viewCount", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     comments?: boolean | Post$commentsArgs<ExtArgs>
     savedBy?: boolean | Post$savedByArgs<ExtArgs>
@@ -2775,6 +2790,7 @@ export namespace Prisma {
       date: Date
       duration: number
       imageUrl: string
+      viewCount: number
     }, ExtArgs["result"]["post"]>
     composites: {}
   }
@@ -3208,6 +3224,7 @@ export namespace Prisma {
     readonly date: FieldRef<"Post", 'DateTime'>
     readonly duration: FieldRef<"Post", 'Int'>
     readonly imageUrl: FieldRef<"Post", 'String'>
+    readonly viewCount: FieldRef<"Post", 'Int'>
   }
     
 
@@ -6937,7 +6954,8 @@ export namespace Prisma {
     description: 'description',
     date: 'date',
     duration: 'duration',
-    imageUrl: 'imageUrl'
+    imageUrl: 'imageUrl',
+    viewCount: 'viewCount'
   };
 
   export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
@@ -7135,6 +7153,7 @@ export namespace Prisma {
     date?: DateTimeFilter<"Post"> | Date | string
     duration?: IntFilter<"Post"> | number
     imageUrl?: StringFilter<"Post"> | string
+    viewCount?: IntFilter<"Post"> | number
     comments?: CommentListRelationFilter
     savedBy?: SavedPostListRelationFilter
   }
@@ -7148,6 +7167,7 @@ export namespace Prisma {
     date?: SortOrder
     duration?: SortOrder
     imageUrl?: SortOrder
+    viewCount?: SortOrder
     comments?: CommentOrderByRelationAggregateInput
     savedBy?: SavedPostOrderByRelationAggregateInput
   }
@@ -7164,6 +7184,7 @@ export namespace Prisma {
     date?: DateTimeFilter<"Post"> | Date | string
     duration?: IntFilter<"Post"> | number
     imageUrl?: StringFilter<"Post"> | string
+    viewCount?: IntFilter<"Post"> | number
     comments?: CommentListRelationFilter
     savedBy?: SavedPostListRelationFilter
   }, "id" | "slug">
@@ -7177,6 +7198,7 @@ export namespace Prisma {
     date?: SortOrder
     duration?: SortOrder
     imageUrl?: SortOrder
+    viewCount?: SortOrder
     _count?: PostCountOrderByAggregateInput
     _avg?: PostAvgOrderByAggregateInput
     _max?: PostMaxOrderByAggregateInput
@@ -7196,6 +7218,7 @@ export namespace Prisma {
     date?: DateTimeWithAggregatesFilter<"Post"> | Date | string
     duration?: IntWithAggregatesFilter<"Post"> | number
     imageUrl?: StringWithAggregatesFilter<"Post"> | string
+    viewCount?: IntWithAggregatesFilter<"Post"> | number
   }
 
   export type CommentWhereInput = {
@@ -7466,6 +7489,7 @@ export namespace Prisma {
     date: Date | string
     duration: number
     imageUrl: string
+    viewCount?: number
     comments?: CommentCreateNestedManyWithoutPostInput
     savedBy?: SavedPostCreateNestedManyWithoutPostInput
   }
@@ -7479,6 +7503,7 @@ export namespace Prisma {
     date: Date | string
     duration: number
     imageUrl: string
+    viewCount?: number
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
     savedBy?: SavedPostUncheckedCreateNestedManyWithoutPostInput
   }
@@ -7492,6 +7517,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     duration?: IntFieldUpdateOperationsInput | number
     imageUrl?: StringFieldUpdateOperationsInput | string
+    viewCount?: IntFieldUpdateOperationsInput | number
     comments?: CommentUpdateManyWithoutPostNestedInput
     savedBy?: SavedPostUpdateManyWithoutPostNestedInput
   }
@@ -7505,6 +7531,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     duration?: IntFieldUpdateOperationsInput | number
     imageUrl?: StringFieldUpdateOperationsInput | string
+    viewCount?: IntFieldUpdateOperationsInput | number
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
     savedBy?: SavedPostUncheckedUpdateManyWithoutPostNestedInput
   }
@@ -7518,6 +7545,7 @@ export namespace Prisma {
     date: Date | string
     duration: number
     imageUrl: string
+    viewCount?: number
   }
 
   export type PostUpdateManyMutationInput = {
@@ -7529,6 +7557,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     duration?: IntFieldUpdateOperationsInput | number
     imageUrl?: StringFieldUpdateOperationsInput | string
+    viewCount?: IntFieldUpdateOperationsInput | number
   }
 
   export type PostUncheckedUpdateManyInput = {
@@ -7540,6 +7569,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     duration?: IntFieldUpdateOperationsInput | number
     imageUrl?: StringFieldUpdateOperationsInput | string
+    viewCount?: IntFieldUpdateOperationsInput | number
   }
 
   export type CommentCreateInput = {
@@ -7850,10 +7880,12 @@ export namespace Prisma {
     date?: SortOrder
     duration?: SortOrder
     imageUrl?: SortOrder
+    viewCount?: SortOrder
   }
 
   export type PostAvgOrderByAggregateInput = {
     duration?: SortOrder
+    viewCount?: SortOrder
   }
 
   export type PostMaxOrderByAggregateInput = {
@@ -7865,6 +7897,7 @@ export namespace Prisma {
     date?: SortOrder
     duration?: SortOrder
     imageUrl?: SortOrder
+    viewCount?: SortOrder
   }
 
   export type PostMinOrderByAggregateInput = {
@@ -7876,10 +7909,12 @@ export namespace Prisma {
     date?: SortOrder
     duration?: SortOrder
     imageUrl?: SortOrder
+    viewCount?: SortOrder
   }
 
   export type PostSumOrderByAggregateInput = {
     duration?: SortOrder
+    viewCount?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -8720,6 +8755,7 @@ export namespace Prisma {
     date: Date | string
     duration: number
     imageUrl: string
+    viewCount?: number
     savedBy?: SavedPostCreateNestedManyWithoutPostInput
   }
 
@@ -8732,6 +8768,7 @@ export namespace Prisma {
     date: Date | string
     duration: number
     imageUrl: string
+    viewCount?: number
     savedBy?: SavedPostUncheckedCreateNestedManyWithoutPostInput
   }
 
@@ -8819,6 +8856,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     duration?: IntFieldUpdateOperationsInput | number
     imageUrl?: StringFieldUpdateOperationsInput | string
+    viewCount?: IntFieldUpdateOperationsInput | number
     savedBy?: SavedPostUpdateManyWithoutPostNestedInput
   }
 
@@ -8831,6 +8869,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     duration?: IntFieldUpdateOperationsInput | number
     imageUrl?: StringFieldUpdateOperationsInput | string
+    viewCount?: IntFieldUpdateOperationsInput | number
     savedBy?: SavedPostUncheckedUpdateManyWithoutPostNestedInput
   }
 
@@ -8886,6 +8925,7 @@ export namespace Prisma {
     date: Date | string
     duration: number
     imageUrl: string
+    viewCount?: number
     comments?: CommentCreateNestedManyWithoutPostInput
   }
 
@@ -8898,6 +8938,7 @@ export namespace Prisma {
     date: Date | string
     duration: number
     imageUrl: string
+    viewCount?: number
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
   }
 
@@ -8959,6 +9000,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     duration?: IntFieldUpdateOperationsInput | number
     imageUrl?: StringFieldUpdateOperationsInput | string
+    viewCount?: IntFieldUpdateOperationsInput | number
     comments?: CommentUpdateManyWithoutPostNestedInput
   }
 
@@ -8971,6 +9013,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     duration?: IntFieldUpdateOperationsInput | number
     imageUrl?: StringFieldUpdateOperationsInput | string
+    viewCount?: IntFieldUpdateOperationsInput | number
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
   }
 
