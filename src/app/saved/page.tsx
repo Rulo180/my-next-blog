@@ -28,6 +28,7 @@ export default async function SavedPage() {
           {savedPosts.map(({ post }) => (
             <GridItem key={post.id}>
               <PostCard
+                url={`/blog/${post.slug}`}
                 postId={post.id}
                 date={post.date}
                 readingTime={post.duration}
