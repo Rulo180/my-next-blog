@@ -1,20 +1,15 @@
 import { Box, Stack, StackSeparator } from "@chakra-ui/react";
 
 import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma";
 import Comment from "@/app/ui/components/Comment";
 import { EmptyState } from "@/app/ui/components/EmptyState";
 import { FaCommentDots } from "react-icons/fa6";
+import { getCommentsByPostIdAction } from "@/actions/comments";
 
 const CommentList: React.FC<{ postId: string }> = async ({ postId }) => {
-  const comments = await prisma.comment.findMany({
-    where: {
-      postId,
-    },
-    include: {
-      user: true,
-      reactions: true
-    },
+  const comments = await getCommentsByPostIdAction(postId, {
+    user: true,
+    reactions: true
   });
 
   const session = await auth();

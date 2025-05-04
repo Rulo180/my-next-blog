@@ -2,12 +2,12 @@ import { Box, Container, Flex, Heading, Text } from "@chakra-ui/react";
 import Image from "next/image";
 
 import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma";
+import { getPostByslugAction, getSavedPostStatus } from "@/actions/posts";
+import { incrementPostViewCount } from "@/data-access/posts";
 import CommentSection from "@/app/ui/components/CommentSection";
 import Markdown from "@/app/ui/components/Markdown";
 import Socials from "@/app/ui/components/Socials";
 import SaveButton from "@/app/ui/components/SaveButton";
-import { incrementPostViewCount } from "@/data-access/posts";
 
 export default async function BlogPost({
   params,
@@ -15,24 +15,18 @@ export default async function BlogPost({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = await prisma.post.findUnique({
-    where: { slug },
-  });
+  const post = await getPostByslugAction(slug);
 
   if (!post) {
     throw new Error(`Post with slug "${slug}" not found`);
   }
+  const session = await auth();
 
   await incrementPostViewCount(post.id)
 
   const { id, content, title, description, date, duration, imageUrl } = post;
 
-  const session = await auth();
-  const userId = session?.user?.id;
-
-  const isSaved = await prisma.savedPost.findFirst({
-    where: { postId: id, userId },
-  });
+  const isSaved = await getSavedPostStatus(id);
 
   return (
     <Container as="main" py={8}>
@@ -54,7 +48,7 @@ export default async function BlogPost({
             >
               <Text>{date.toLocaleDateString()}</Text>-<Text>{duration} minutes</Text>
             </Flex>
-            {session && (<SaveButton postId={id} isSaved={!!isSaved} />)}
+            {session && (<SaveButton postId={id} isSaved={isSaved} />)}
           </Flex>
           <Heading size="5xl" pb="8">
             {title}

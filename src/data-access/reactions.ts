@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { Reaction } from "@/generated/prisma";
 
 export async function toggleReaction({
   userId,
@@ -8,14 +9,15 @@ export async function toggleReaction({
   userId: string;
   commentId: string;
   type: "LIKE" | "DISLIKE" | null;
-}) {
+}): Promise<Reaction | null> {
   if (!type) {
-    return await prisma.reaction.deleteMany({
+    await prisma.reaction.deleteMany({
       where: {
         userId,
         commentId,
       },
     });
+    return null;
   }
 
   return await prisma.reaction.upsert({

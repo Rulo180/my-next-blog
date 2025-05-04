@@ -2,12 +2,10 @@ import { Grid, GridItem } from "@chakra-ui/react";
 
 import { auth } from "@/auth";
 import PostCard from "@/app/ui/components/PostCard";
-import { Prisma } from "@/generated/prisma";
+import { Post, SavedPost } from "@/generated/prisma";
 
 interface PostsProps {
-  posts: Prisma.PostGetPayload<{
-    include: { savedBy: true };
-  }>[];
+  posts: (Post &  { savedBy: SavedPost[]}) [];
 }
 
 export default async function Posts({ posts }: PostsProps) {

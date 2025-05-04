@@ -15,17 +15,11 @@ import { FaEllipsis, FaThumbsDown, FaThumbsUp } from "react-icons/fa6";
 import { toggleReactionAction } from "@/actions/reactions";
 import { useSession } from "next-auth/react";
 
-import type { Comment, User } from "@/app/lib/definitions";
 import { deleteComment } from "@/actions/comments";
-import { Prisma } from "@/generated/prisma";
+import type { Comment, Reaction, User } from "@/generated/prisma";
 
 interface CommentProps {
-  comment: Prisma.CommentGetPayload<{
-    include: {
-      reactions: true;
-      user: true;
-    };
-  }>;
+  comment: Comment & { reactions: Reaction[]};
   isOwner: boolean;
   owner: User;
 }

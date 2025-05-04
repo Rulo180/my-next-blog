@@ -2,10 +2,38 @@
 
 import { revalidatePath } from "next/cache";
 
+import { Prisma } from "@/generated/prisma";
 import { auth } from "@/auth";
-import { createComment, deleteCommentById } from "@/data-access/comments";
+import { createComment, deleteCommentById, getCommentCountByPostId, getCommentsByPostId } from "@/data-access/comments";
 import { getPostById } from "@/data-access/posts";
 
+export async function getCommentsByPostIdAction(
+  postId: string,
+  include: Prisma.CommentInclude
+): Promise<Prisma.CommentGetPayload<{ include: typeof include }>[]> {
+  try {
+    const {user, ...rest} = include;
+    if (user) {
+      return await getCommentsByPostId(postId, {
+        user: { select: { id: true, name: true, email: true } },
+        ...rest,
+      });
+    }
+    return await getCommentsByPostId(postId, include);
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+    throw new Error("Failed to fetch comments.");
+  }
+}
+
+export async function getCommentCountByPostIdAction(postId: string): Promise<number> {
+  try {
+    return await getCommentCountByPostId(postId);
+  } catch (error) {
+    console.error("Error fetching comment count:", error);
+    throw new Error("Failed to fetch comment count.");
+  }
+}
 
 export async function saveComment(
     prevState: string | null | undefined,

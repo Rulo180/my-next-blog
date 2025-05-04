@@ -10,7 +10,7 @@ import type { User } from "@/app/lib/definitions";
 export async function authenticate(
     prevState: string | undefined,
     formData: FormData
-  ) {
+  ): Promise<string | undefined> {
     try {
       await signIn("credentials", formData);
     } catch (error) {
@@ -34,8 +34,8 @@ export async function authenticate(
     Pick<User, "id" | "name" | "email"> & (typeof includePassword extends true ? { password: string } : {}) | null
   > {
     try {
-      const user = getUserByEmail(email, includePassword);
-      return user || undefined;
+      const user = await getUserByEmail(email, includePassword);
+      return user || null;
     } catch (error) {
       console.error("Failed to fetch user:", error);
       throw new Error("Failed to fetch user.");
@@ -51,11 +51,11 @@ export async function authenticate(
   
       const hashedPassword = await bcrypt.hash(password, 10);
       try {
-        createUser({
+        await createUser({
           name,
           email,
           password: hashedPassword,
-        })
+        });
       } catch (prismaError) {
         console.error("Error creating user in Prisma:", prismaError);
         return "Failed to create user.";

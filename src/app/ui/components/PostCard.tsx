@@ -1,10 +1,10 @@
-import { prisma } from "@/lib/prisma";
 import { Box, Card, Flex, Image, Separator, Text } from "@chakra-ui/react";
 import Link from "next/link";
 
 import { auth } from "@/auth";
 import SaveButton from "@/app/ui/components/SaveButton";
 import FadeInUp from "@/app/ui/components/FadeInUp";
+import { getCommentCountByPostIdAction } from "@/actions/comments";
 
 interface PostCardProps {
   postId: string;
@@ -50,13 +50,7 @@ const PostCard: React.FC<PostCardProps> = async ({
   const fontSize = "1rem";
   const lineHeight = "1.5";
 
-  const commentCount = prisma.comment.count({
-    where: {
-      postId: {
-        equals: postId,
-      },
-    },
-  });
+  const commentCount = getCommentCountByPostIdAction(postId)
 
   // Calculate height for two lines in rem
   const twoLineHeight = `calc(${fontSize} * ${lineHeight} * 2)`;
