@@ -45,6 +45,21 @@ Code: [CodeSandbox](https://codesandbox.io/p/github/Rulo180/my-next-blog/main?im
 
 ## Screenshots
 
+### Home
+![homepage](https://github.com/user-attachments/assets/45f9073d-6a2c-456a-922c-b91614ff9042)
+
+### Post
+
+![blogpage](https://github.com/user-attachments/assets/d9bae93f-87a3-4855-abb8-81dcc97c4f08)
+
+### Login
+
+![login](https://github.com/user-attachments/assets/83f56b91-590f-4627-b3ed-8221461a7d0a)
+
+### Signup
+
+![signup](https://github.com/user-attachments/assets/9a23e5fc-2efe-40fc-bcec-68cb6d8d8333)
+
 
 ## Getting Started
 
