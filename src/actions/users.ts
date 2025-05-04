@@ -3,9 +3,9 @@
 import bcrypt from "bcrypt";
 import { AuthError } from "next-auth";
 
+import { User } from "@/generated/prisma";
 import { signIn } from "@/auth";
 import { createUser, getUserByEmail } from "@/data-access/users";
-import type { User } from "@/app/lib/definitions";
 
 export async function authenticate(
     prevState: string | undefined,

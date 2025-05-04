@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { Box, Heading, Stack } from "@chakra-ui/react";
 
-import { Post } from "@/app/lib/definitions";
+import { Post } from "@/generated/prisma";
 import CommentList from "@/app/ui/components/CommentList";
 import CommentForm from "@/app/ui/components/CommentForm";
 import CommentSkeleton from "@/app/ui/components/CommentSkeleton";

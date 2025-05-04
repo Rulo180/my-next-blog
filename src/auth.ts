@@ -3,9 +3,9 @@ import Credentials from 'next-auth/providers/credentials';
 import bcrypt from 'bcrypt';
 import * as yup from 'yup';
 
+import { User } from '@/generated/prisma';
 import { authConfig } from '@/auth.config';
 import { getUser } from '@/actions/users';
-import { User } from '@/app/lib/definitions';
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
   ...authConfig,

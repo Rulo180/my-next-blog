@@ -14,11 +14,11 @@ import {
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 
+import type { Post } from "@/generated/prisma";
 import { saveComment } from "@/actions/comments";
-import type { Prisma } from "@/generated/prisma";
 
 interface CommentFormProps {
-  post: Prisma.PostGetPayload<object>;
+  post: Post;
 }
 
 const CommentForm: React.FC<CommentFormProps> = ({ post }) => {
