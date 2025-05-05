@@ -5,8 +5,9 @@
 This project was created as a learning experience to improve my skills and explore new technologies. It serves as a platform to experiment with modern web development tools, frameworks, and best practices.
 
 Take a look of the app here:
-App:  [Vercel](https://my-next-blog-ebon.vercel.app/)
-Code: [CodeSandbox](https://codesandbox.io/p/github/Rulo180/my-next-blog/main?import=true)
+
+- App:  [Vercel](https://my-next-blog-ebon.vercel.app/)
+- Code: [CodeSandbox](https://codesandbox.io/p/github/Rulo180/my-next-blog/main?import=true)
 
 ## Tech Stack
 
